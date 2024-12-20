@@ -1,0 +1,38 @@
+/* Default theme (light) */
+:root {
+  --bg-color: white;
+  --text-color: black;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --bg-color: #333;
+  --text-color: white;
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --bg-color: white;
+  --text-color: black;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #555;
+  color: #ddd;
+}

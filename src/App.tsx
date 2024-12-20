@@ -1,16 +1,13 @@
-import Button from "./components/Button/Button";
+import { Text } from "./components/atoms/Text/Text";
+
+import "./App.css";
 
 function App() {
-  return  (
-    <>
-<Button children = {"New Invoice"}  icon="../public/assets/add.png" radius="full" bgColor="primary"  size="lg" onClick={()=>alert('deleted')} />
-    
-    </>
-  )
-
-  
-
- 
+  return (
+    <div>
+      <Text class_="" children={"Hello"} variant="description" />
+    </div>
+  );
 }
 
 export default App;
