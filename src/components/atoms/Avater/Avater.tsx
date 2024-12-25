@@ -1,5 +1,5 @@
 import Icon from '../Icon/Icon'
-
+import styles from './avater.module.css'
 interface AvatarProps {
     src: string
     alt: string
@@ -7,8 +7,8 @@ interface AvatarProps {
 
 const Avatar = ({ src, alt }: AvatarProps) => {
     return (
-        <button className={'avatar'}>
-            <Icon src={src} alt={alt} radius={'rounded-full'} />
+        <button className={styles.avatar}>
+            <Icon size='md' src={src} alt={alt} radius={'rounded-full'} />
         </button>
     )
 }

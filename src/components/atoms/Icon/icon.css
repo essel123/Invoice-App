@@ -2,6 +2,8 @@
     display: inline-block;
     width: 100px;
     height: 100px;
+    cursor: pointer;
+    transition: 0.5s ease;
 
     img{
         width: 100%;
@@ -10,8 +12,8 @@
     }
 
     &.sm{
-        width: 30px;
-        height: 30px;
+        width: 15px;
+        height: 15px;
     }
 
     &.md{

@@ -1,22 +1,30 @@
-import './icon.css'
+import "./icon.css";
 interface IconProps {
-    src: string
-    alt: string
-    radius?:
-        | 'rounded'
-        | 'rounded-sm'
-        | 'rounded-md'
-        | 'rounded-lg'
-        | 'rounded-full'
-    size?: 'sm' | 'md' | 'lg'
+  src: string;
+  alt: string;
+  radius?:
+    | "rounded"
+    | "rounded-sm"
+    | "rounded-md"
+    | "rounded-lg"
+    | "rounded-full";
+  size?: "sm" | "md" | "lg";
+
+  onClick?: () => void;
 }
 
-const Icon = ({ src, alt, radius = 'rounded', size = 'sm' }: IconProps) => {
-    return (
-        <span className={`icon ${size}`}>
-            <img src={src} alt={alt} className={radius} />
-        </span>
-    )
-}
+const Icon = ({
+  src,
+  alt,
+  radius = "rounded",
+  size = "sm",
+  onClick
+}: IconProps) => {
+  return (
+    <span className={`icon ${size}`} onClick={onClick}>
+      <img src={src} alt={alt} className={radius} />
+    </span>
+  );
+};
 
-export default Icon
+export default Icon;

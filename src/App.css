@@ -1,20 +1,26 @@
 /* Default theme (light) */
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
 :root {
-  --bg-color: white;
+  --bg-color: rgb(216, 238, 247);
   --text-color: black;
 }
 
 /* Dark theme */
-[data-theme="dark"] {
+/* [data-theme="dark"] {
   --bg-color: #333;
   --text-color: white;
-}
+} */
 
 /* Light theme */
-[data-theme="light"] {
+/* [data-theme="light"] {
   --bg-color: white;
   --text-color: black;
-}
+} */
 
 body {
   background-color: var(--bg-color);
@@ -23,16 +29,31 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-button {
-  background-color: var(--text-color);
-  color: var(--bg-color);
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
+.scroll {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 550px;
+  overflow-y: scroll;
 }
 
-button:hover {
-  background-color: #555;
-  color: #ddd;
+.scroll::-webkit-scrollbar{
+  display: none; 
+}
+
+.home{
+  overflow: hidden;
+  display: flex;
+  
+}
+
+@media( max-width:768px) {
+  .home{
+    display: flex;
+    flex-direction: column;
+  }
+  
 }
