@@ -6,7 +6,7 @@ interface ButtonProps {
   bgColor: "primary" | "secondary" | "success" | "danger" | "tertiary";
   onClick: () => void;
   children?: React.ReactNode;
-  name:string
+  name: string;
 }
 const Button: React.FC<ButtonProps> = ({
   size = "md",

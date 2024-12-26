@@ -1,32 +1,28 @@
-import { useState } from "react";
 import Avatar from "../../atoms/Avater/Avater";
 import Icon from "../../atoms/Icon/Icon";
+import Toggle from "../../atoms/Toggler/Toggle";
 import styles from "./sidebar.module.css";
 
 function Sidebar() {
-  const [IsDarkMode, setIsDarkMode] = useState(false);
-  function handleMode() {
-    setIsDarkMode(!IsDarkMode);
-  }
   return (
     <div className={styles.sidebar}>
-      <div className={styles.togller}>
-        {IsDarkMode
-          ? <Icon
-              size="sm"
-              src="../../../../public/assets/icon-sun.svg"
-              alt="image of moon"
-              onClick={() => handleMode()}
-            />
-          : <Icon
-              size="sm"
-              src="../../../../public/assets/icon-moon.svg"
-              alt="image of moon"
-              onClick={() => handleMode()}
-            />}
+      <div className={styles.logo}>
+        <Icon
+          size="md"
+          src="../../../../public/assets/logo.svg"
+          alt="image of logo"
+        />
       </div>
       <footer className={styles.footer}>
-        <Avatar src={"../../../../public/assets/image-avatar.jpg"} alt={""} />
+        <div className={styles.toggler}>
+          <Toggle />
+        </div>
+        <div className={styles.avatar}>
+          <Avatar
+            src={"../../../../public/assets/image-avatar.jpg"}
+            alt={"image of avater"}
+          />
+        </div>
       </footer>
     </div>
   );

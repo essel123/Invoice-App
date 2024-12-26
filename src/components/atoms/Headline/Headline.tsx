@@ -1,5 +1,7 @@
 import React from "react";
 
+import styles from './headline.module.css'
+
 
 interface HeadlineProps {
   tag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
@@ -10,11 +12,10 @@ interface HeadlineProps {
 const Headline: React.FC<HeadlineProps> = ({
   tag = "h1",
   children,
-  className
 }) => {
   const Tag = tag;
   return (
-    <Tag className={className}>
+    <Tag className={styles.headline}>
       {children}
     </Tag>
   );

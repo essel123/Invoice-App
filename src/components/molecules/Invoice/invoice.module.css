@@ -2,10 +2,22 @@
   max-width: 730px;
   width: 100%;
   padding: 16px 5px;
-  background: #ffffff;
+  background: var(--invoice-bg-color);
   border-radius: 8px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin-bottom: 16px;
+}
+
+:root {
+  --invoice-bg-color: rgba(255, 255, 255, 1);
+}
+[data-theme="dark"] {
+  --invoice-bg-color: rgba(30, 33, 57, 1);
+
+}
+
+[data-theme="light"] {
+  --invoice-bg-color: rgba(255, 255, 255, 1);
 }

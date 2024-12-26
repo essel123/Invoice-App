@@ -11,6 +11,7 @@ interface IconProps {
   size?: "sm" | "md" | "lg";
 
   onClick?: () => void;
+  isClickable?: boolean;
 }
 
 const Icon = ({
@@ -18,10 +19,11 @@ const Icon = ({
   alt,
   radius = "rounded",
   size = "sm",
+  isClickable = false,
   onClick
 }: IconProps) => {
   return (
-    <span className={`icon ${size}`} onClick={onClick}>
+    <span className={`${isClickable?'icon':''} ${size}`} onClick={onClick}>
       <img src={src} alt={alt} className={radius} />
     </span>
   );

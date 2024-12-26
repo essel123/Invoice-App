@@ -23,7 +23,7 @@ function Invoice({
 }: InvoiceProps) {
   return (
     <div className={styles.invoice}>
-      <Headline children={`#${id}`} />
+      <Headline children={`#${id}`} className="headline" />
       <Text children={paymentDue} />
       <Text children={clientName} />
       <Headline children={`£${total}`} />
@@ -33,6 +33,7 @@ function Invoice({
         src={"../../../../public/assets/icon-arrow-right.svg"}
         alt={""}
         size="sm"
+        isClickable={true}
         onClick={() => onClick}
       />
     </div>

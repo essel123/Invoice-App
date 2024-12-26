@@ -13,7 +13,11 @@ export const Text = ({
   class_
 }: TextProps) => {
   return (
-    <p className={`${styles.text} ${styles[variant]} ${class_ ? styles[class_] : ''}`}>
+    <p
+      className={`${styles.text} ${styles[variant]} ${class_
+        ? styles[class_]
+        : ""}`}
+    >
       {children}
     </p>
   );

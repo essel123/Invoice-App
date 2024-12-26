@@ -2,7 +2,8 @@ import "./App.css";
 import Invoice from "./components/molecules/Invoice/Invoice";
 
 import data from "./assets/data.json";
-import Sidebar from "./components/molecules/SideBar/SidebAr";
+import Sidebar from "./components/molecules/SideBar/SideBar";
+import Header from "./components/molecules/Header/Header";
 
 function App() {
   const Inovices = data.map(invoice =>
@@ -18,10 +19,14 @@ function App() {
   );
   return (
     <section className="home">
-       <Sidebar />
-      <div className="scroll">
-        {Inovices}
-      </div>
+      <Sidebar />
+
+     <main>
+     <Header />
+     <div className="scrolling">
+     {Inovices}
+     </div>
+     </main>
     </section>
   );
 }
