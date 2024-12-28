@@ -2,13 +2,6 @@
   color: var(--headline-text-color);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-  color: var(--headline-text-color);
-}
 
 :root {
   --headline-text-color: rgba(30, 33, 57, 1);
@@ -19,4 +12,9 @@ h5 {
 
 [data-theme="light"] {
   --headline-text-color: rgba(30, 33, 57, 1);
+}
+
+
+.form__captions{
+  color: #7C5DFA;
 }

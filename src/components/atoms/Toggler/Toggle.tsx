@@ -1,22 +1,27 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Icon from "../Icon/Icon";
+import { useAppDispatch, useAppSelector } from "../../../State/hooks";
+import { setDarkMode } from "../../../State/stateSlice";
 
 function Toggle() {
   const htmlElement = document.documentElement;
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const controller = useAppDispatch();
 
+  const isDarkMode = useAppSelector(state => state.pageState.isDarkMode);
   useEffect(
     () => {
-      const currentTheme = htmlElement.getAttribute("data-theme");
-      setIsDarkMode(currentTheme === "dark");
+      const currentTheme = localStorage.getItem("theme") || htmlElement.getAttribute("data-theme") || "light";
+      htmlElement.setAttribute("data-theme", currentTheme);
+      controller(setDarkMode(currentTheme === "dark"));
     },
-    [htmlElement]
+    [controller, htmlElement]
   );
 
   function handleMode() {
     const newTheme = isDarkMode ? "light" : "dark";
     htmlElement.setAttribute("data-theme", newTheme);
-    setIsDarkMode(!isDarkMode);
+    localStorage.setItem("theme", newTheme);
+    controller(setDarkMode(!isDarkMode));
   }
 
   return (

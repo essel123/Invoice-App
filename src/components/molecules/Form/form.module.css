@@ -1,0 +1,52 @@
+.form__page {
+  padding-left: 25%;
+  padding-right: 5%;
+  margin-top: 50px;
+  margin-bottom: 10%;
+}
+
+.form__group {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+
+.bill__sender,.bill__reciever{
+  margin-top: 30px;
+ 
+}
+
+.action__buttons{
+  width: 100%;
+  max-width: 511px;
+  border-radius: 20px;
+  padding: 10px;
+  padding-left: 10%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: var(--action__buttons-bg);
+  box-shadow: 0px -10px 100px rgba(0, 0, 0, 0.7);
+
+}
+.right__action_buttons{
+  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+:root{
+  --action__buttons-bg: #ffffff;
+}
+
+[data-theme="dark"]{
+  --action__buttons-bg: #141625;
+}
+
+[data-theme="light"]{
+  --action__buttons-bg: #ffffff;
+}

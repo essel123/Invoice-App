@@ -1,28 +1,47 @@
 /* badge.module.css */
 
 .badge {
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    width: 100%;
-    max-width: 104px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .badge-paid {
-    background-color:  rgba(51, 214, 159, 0.1); /* Green */
-    color: #33D69F;
-  }
-  
-  .badge-pending {
-    background-color: rgba(255, 143, 0, 0.1); /* Orange */
-    color: rgba(255, 143, 0, 1);
-  }
-  
-  .badge-draft {
-    background-color: rgba(55, 59, 83, 0.1); /* Gray */
-    color: rgba(55, 59, 83, 1);
-  }
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 100%;
+  max-width: 104px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
 
+.badge-paid {
+  background-color: rgba(51, 214, 159, 0.1); /* Green */
+  color: #33d69f;
+}
+
+
+
+.badge-pending {
+  background-color: rgba(255, 143, 0, 0.1); /* Orange */
+  color: #ff8f00;
+}
+
+.badge-draft {
+  background-color: rgba(55, 59, 83, 0.1); /* Gray */
+  color: rgba(55, 59, 83, 1);
+}
+
+.circle {
+  width: 8px;
+  height: 8px;
+  top: 4px;
+  gap: 0px;
+ border-radius: 50%;
+}
+.circle-paid {
+  background-color: rgba(255, 143, 0, 1);
+}
+.circle-pending {
+  background: #ff8f00;
+}
+.circle-draft {
+  background-color: rgba(55, 59, 83, 1);
+}

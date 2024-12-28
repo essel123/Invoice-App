@@ -31,10 +31,16 @@ type Invoice = {
 
 type InvoiceState = {
   invoices: Invoice[];
+  isOpen: boolean;
+  isDarkMode: boolean;
+  delete: boolean;
 };
 
 const initialState: InvoiceState = {
-  invoices: []
+  invoices: [],
+  isOpen: false,
+  isDarkMode: false,
+  delete: false
 };
 
 export const stateSlice = createSlice({
@@ -56,10 +62,28 @@ export const stateSlice = createSlice({
       if (index !== -1) {
         state.invoices[index] = action.payload;
       }
+    },
+
+    setDialog: (state, action: PayloadAction<boolean>) => {
+      state.isOpen = action.payload;
+    },
+    setDarkMode: (state, action: PayloadAction<boolean>) => {
+      state.isDarkMode = action.payload;
+    },
+
+    setDelete: (state, action: PayloadAction<boolean>) => {
+      state.delete = action.payload;
     }
   }
 });
 
-export const { addInvoice, removeInvoice, updateInvoice } = stateSlice.actions;
+export const {
+  addInvoice,
+  removeInvoice,
+  updateInvoice,
+  setDialog,
+  setDarkMode,
+  setDelete,
+} = stateSlice.actions;
 
 export default stateSlice.reducer;

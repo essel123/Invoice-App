@@ -1,25 +1,19 @@
-import Button from "../../atoms/Button/Button";
-import Headline from "../../atoms/Headline/Headline";
-import Icon from "../../atoms/Icon/Icon";
-import { Text } from "../../atoms/Text/Text";
+import React from "react";
 import styles from "./header.module.css";
 
-export default function Header() {
+type HeaderProps = {
+  leftElements: React.ReactNode;
+  rightElements: React.ReactNode;
+};
+
+export default function Header({ leftElements, rightElements }: HeaderProps) {
   return (
     <header>
       <div className={styles.leftside}>
-        <Headline children={"Invoices"} />
-        <Text children={"There are 7 total invoices"} />
+        {leftElements}
       </div>
       <div className={styles.rightside}>
-        <Button
-          children={<Icon src={"./assets/icon-plus.svg"} alt={""} />}
-          size={"lg"}
-          radius={"full"}
-          bgColor={"primary"}
-          onClick={() => {}}
-          name={"New Invoice"}
-        />
+        {rightElements}
       </div>
     </header>
   );

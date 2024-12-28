@@ -4,26 +4,26 @@ interface ButtonProps {
   size: "sm" | "md" | "lg";
   radius: "none" | "sm" | "md" | "lg" | "full";
   bgColor: "primary" | "secondary" | "success" | "danger" | "tertiary";
-  onClick: () => void;
+  onClick?: () => void;
   children?: React.ReactNode;
-  name: string;
+  type?: "submit" | "reset" | "button";
 }
 const Button: React.FC<ButtonProps> = ({
   size = "md",
   radius = "md",
   bgColor = "primary",
+
   onClick,
   children,
-  name
+  type
 }) => {
   const buttonClass = `${styles.btn} ${styles[`btn-${size}`]} ${styles[
     `btn-radius-${radius}`
   ]} ${styles[`btn-${bgColor}`]}`;
 
   return (
-    <button className={buttonClass} onClick={onClick}>
+    <button className={buttonClass} onClick={onClick} type={type}>
       {children}
-      {name}
     </button>
   );
 };
