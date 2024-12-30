@@ -30,7 +30,7 @@ function Invoice({
       <Badge status={status} />
 
       <Icon
-        src={"../../../../public/assets/icon-arrow-right.svg"}
+        src={"../assets/icon-arrow-right.svg"}
         alt={""}
         size="sm"
         isClickable={true}

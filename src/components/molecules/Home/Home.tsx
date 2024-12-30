@@ -124,6 +124,7 @@ function Home() {
       <Sidebar />
       <main>
         {/* Routes for rendering content dynamically */}
+
         <Routes>
           <Route path="/" element={Invoices} />
           <Route

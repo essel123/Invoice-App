@@ -32,8 +32,8 @@ function Toggle() {
       size="sm"
       src={
         isDarkMode
-          ? "../../../../public/assets/icon-sun.svg"
-          : "../../../../public/assets/icon-moon.svg"
+          ? "../assets/icon-sun.svg"
+          : "../assets/icon-moon.svg"
       }
       alt={isDarkMode ? "image of sun" : "image of moon"}
       onClick={handleMode}

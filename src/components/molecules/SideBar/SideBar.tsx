@@ -9,7 +9,7 @@ function Sidebar() {
       <div className={styles.logo}>
         <Icon
           size="md"
-          src="../../../../public/assets/logo.svg"
+          src="../assets/logo.svg"
           alt="image of logo"
         />
       </div>
@@ -19,7 +19,7 @@ function Sidebar() {
         </div>
         <div className={styles.avatar}>
           <Avatar
-            src={"../../../../public/assets/image-avatar.jpg"}
+            src={"../assets/image-avatar.jpg"}
             alt={"image of avater"}
           />
         </div>

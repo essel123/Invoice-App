@@ -7,7 +7,7 @@ function No__Invoice() {
     <div className="no__invoice">
       <section>
         <Icon
-          src="../../../../public/assets/illustration-empty.svg"
+          src="../assets/illustration-empty.svg"
           alt={"image of illustration"}
         />
         <Headline variant="h2" children={"There is nothing here"} />
