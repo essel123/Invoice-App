@@ -9,7 +9,7 @@ type InvoiceProps = {
   paymentDue: string;
   clientName: string;
   total: number;
-  id:string;
+  id: string;
   onClick: () => void;
 };
 
@@ -34,7 +34,7 @@ function Invoice({
         alt={""}
         size="sm"
         isClickable={true}
-        onClick={() => onClick}
+        onClick={onClick}
       />
     </div>
   );

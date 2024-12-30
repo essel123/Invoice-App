@@ -11,15 +11,14 @@
   gap: 30px;
 }
 
-
-.bill__sender,.bill__reciever{
+.bill__sender,
+.bill__reciever {
   margin-top: 30px;
- 
 }
 
-.action__buttons{
+.action__buttons {
   width: 100%;
-  max-width: 511px;
+  max-width: 640px;
   border-radius: 20px;
   padding: 10px;
   padding-left: 10%;
@@ -31,22 +30,56 @@
   left: 0;
   background: var(--action__buttons-bg);
   box-shadow: 0px -10px 100px rgba(0, 0, 0, 0.7);
-
 }
-.right__action_buttons{
+.right__action_buttons {
   gap: 10px;
   display: flex;
   justify-content: space-between;
 }
 
-:root{
-  --action__buttons-bg: #ffffff;
+.input__field {
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: var(--input-border);
+  border-radius: 5px;
+  margin-top: 10px;
+  background: var(--input-bg);
 }
 
-[data-theme="dark"]{
+input:focus {
+  border: 1.5px solid #007bff !important;
+}
+
+.error {
+  border: 1.5px solid red;
+}
+.error__label {
+  display: flex;
+  justify-content: space-between;
+}
+.vertical__spacer {
+  height: 100px;
+}
+
+:root {
+  --action__buttons-bg: #ffffff;
+  --input-bg: rgba(255, 255, 255, 1);
+  --input-border: 1.5px solid rgba(223, 227, 250, 1);
+}
+
+[data-theme="dark"] {
+  --input-bg: rgba(30, 33, 57, 1);
+  --input-border: 0px solid rgba(55, 59, 83, 1);
   --action__buttons-bg: #141625;
 }
 
-[data-theme="light"]{
+[data-theme="light"] {
+  --input-bg: rgba(255, 255, 255, 1);
+  --input-border: 1.5px solid rgba(223, 227, 250, 1);
   --action__buttons-bg: #ffffff;
 }

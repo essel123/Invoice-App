@@ -23,7 +23,7 @@ const Icon = ({
   onClick
 }: IconProps) => {
   return (
-    <span className={`${isClickable?'icon':''} ${size}`} onClick={onClick}>
+    <span className={`${isClickable ? "icon" : ""} ${size}`} onClick={onClick}>
       <img src={src} alt={alt} className={radius} />
     </span>
   );

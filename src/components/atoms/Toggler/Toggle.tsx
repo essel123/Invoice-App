@@ -10,7 +10,10 @@ function Toggle() {
   const isDarkMode = useAppSelector(state => state.pageState.isDarkMode);
   useEffect(
     () => {
-      const currentTheme = localStorage.getItem("theme") || htmlElement.getAttribute("data-theme") || "light";
+      const currentTheme =
+        localStorage.getItem("theme") ||
+        htmlElement.getAttribute("data-theme") ||
+        "light";
       htmlElement.setAttribute("data-theme", currentTheme);
       controller(setDarkMode(currentTheme === "dark"));
     },

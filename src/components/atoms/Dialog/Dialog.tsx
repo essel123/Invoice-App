@@ -11,6 +11,10 @@ const Dialog: React.FC<DialogProps> = ({ children }) => {
   const isOpen = useAppSelector(
     (state: { pageState: { isOpen: boolean } }) => state.pageState.isOpen
   );
+
+  const isDelete = useAppSelector(
+    (state: { pageState: { isDelete: boolean } }) => state.pageState.isDelete
+  );
   const dispatch = useAppDispatch();
 
   const handleClose = useCallback(
@@ -25,7 +29,7 @@ const Dialog: React.FC<DialogProps> = ({ children }) => {
   return (
     <div className="dialog-overlay" onClick={handleClose}>
       <div
-        className={`dialog-content ${isOpen ? "slide-in" : "slide-out"}`}
+        className={` ${isDelete?'center':'dialog-content'} ${isOpen ? "slide-in" : "slide-out"}`}
         onClick={e => e.stopPropagation()}
       >
         {children}
@@ -35,3 +39,4 @@ const Dialog: React.FC<DialogProps> = ({ children }) => {
 };
 
 export default React.memo(Dialog);
+

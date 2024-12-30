@@ -1,8 +1,11 @@
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Button from "../../atoms/Button/Button";
 import Headline from "../../atoms/Headline/Headline";
-import InputField from "../../atoms/Input/InputField";
 import styles from "./form.module.css";
+
+import { Text } from "../../atoms/Text/Text";
+import { useAppDispatch, useAppSelector } from "../../../State/hooks";
+import { addInvoice, setDialog } from "../../../State/stateSlice";
 
 interface Address {
   street: string;
@@ -11,274 +14,228 @@ interface Address {
   country: string;
 }
 
+interface Item {
+  name: string;
+  quantity: number;
+  price: number;
+  total: number;
+}
+
 interface FormData {
+  id: string;
   senderAddress: Address;
   clientAddress: Address;
   clientName: string;
   clientEmail: string;
-  invoiceDate: string;
+  createdAt: string;
   paymentTerms: number;
-  projectDescription: string;
+  description: string;
+  status: string;
+  items: Item[];
+  total: number;
 }
 
-const defaultValues: FormData = {
-  senderAddress: {
-    street: "",
-    city: "",
-    postCode: "",
-    country: ""
-  },
-  clientAddress: {
-    street: "",
-    city: "",
-    postCode: "",
-    country: ""
-  },
-  clientName: "",
-  clientEmail: "",
-  invoiceDate: "",
-  paymentTerms: 1,
-  projectDescription: ""
-};
+const InputField = ({ label, register, name, validation, error, type }: any) => (
+  <div className={styles.input__field}>
+    <div className={styles.error__label}> 
+      <label>{label} </label>{error &&  <Text class_="error" children={`${error.message}`} />}
+    </div>
+    <input 
+      className={`${error ? styles.error : ''}`} 
+      type={type} 
+      aria-invalid={!!error}
+      {...register(name, validation)} 
+    />
+  </div>
+);
 
 function Form() {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset
-  } = useForm<FormData>({ defaultValues });
+  function generateInvoiceId() {
+    const letters = Array.from({ length: 2 }, () => 
+      String.fromCharCode(65 + Math.floor(Math.random() * 26))
+    ).join('');
+    const numbers = Array.from({ length: 4 }, () => 
+      Math.floor(Math.random() * 10)
+    ).join('');
+    return `${letters}${numbers}`;
+  }
 
-  const onSubmit = (data: FormData) => {
-    console.log("Form data submitted", data);
-    // Handle submission logic here
+  const dispatch = useAppDispatch();
+  const isEdit = useAppSelector(state => state.pageState.isEdit);
+  const selectedInvoice = useAppSelector(state => state.pageState.selectedInvoice);
+  const isOpen = useAppSelector(state => state.pageState.isOpen);
+
+  const defaultValues: FormData = {
+    id: generateInvoiceId(), 
+    senderAddress: { street: "", city: "", postCode: "", country: "" },
+    clientAddress: { street: "", city: "", postCode: "", country: "" },
+    clientName: "",
+    clientEmail: "",
+    createdAt: "",
+    paymentTerms: 1,
+    description: "",
+    items: [], 
+    status: 'pending',
+    total: 0   
+  };
+
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>({ defaultValues });
+
+  const onSubmit = (data: FormData, status: string) => {
+    const invoiceData = {
+      ...data,
+      status,
+      paymentDue: new Date(new Date().setDate(new Date(data.createdAt).getDate() + data.paymentTerms)).toISOString(),
+    };
+    dispatch(addInvoice(invoiceData));
+    dispatch(setDialog(!isOpen));
+  };
+
+  const handleSaveAsDraft = (e: React.MouseEvent<HTMLButtonElement>) => {
+  
+    e.preventDefault();
+    setValue('status', 'draft');
+    handleSubmit((data) => onSubmit(data, 'draft'))();
+  };
+
+  const handleSaveAndSend = (e: React.MouseEvent<HTMLButtonElement>) => {
+  
+    e.preventDefault();
+    setValue('status', 'pending');
+    handleSubmit((data) => onSubmit(data, 'pending'))();
   };
 
   const handleDiscard = () => {
     reset();
-    alert("Form discarded");
   };
 
   return (
     <div className={styles.form__page}>
-      <Headline variant="h1">New Invoice</Headline>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <Headline variant="h1"> {isEdit ? `Edit #${selectedInvoice}` : 'New Invoice'}</Headline>
+      <form className={styles.form} onSubmit={handleSubmit((data) => onSubmit(data, 'pending'))}>
         <div className={styles.bill__sender}>
-          <Headline className="form__captions" variant="h4">
-            Bill From
-          </Headline>
-          <Controller
+          <Headline className="form__captions" variant="h4">Bill From</Headline>
+          <InputField
+            label={<Text children={"Street Address"} />}
+            register={register}
             name="senderAddress.street"
-            control={control}
-            rules={{ required: "Street Address is required" }}
-            render={({ field }) => (
-              <InputField
-                label="Street Address"
-                type="text"
-                {...field}
-                error={errors.senderAddress?.street?.message}
-              />
-            )}
+            validation={{ required: "Street Address is required" }}
+            error={errors.senderAddress?.street}
           />
           <div className={styles.form__group}>
-            <Controller
+            <InputField
+              label={<Text children={"City"} />}
+              register={register}
               name="senderAddress.city"
-              control={control}
-              rules={{ required: "City is required" }}
-              render={({ field }) => (
-                <InputField
-                  label="City"
-                  type="text"
-                  {...field}
-                  error={errors.senderAddress?.city?.message}
-                />
-              )}
+              validation={{ required: "Required" }}
+              error={errors.senderAddress?.city}
             />
-            <Controller
+            <InputField
+              label={<Text children={"Post Code"} />}
+              register={register}
               name="senderAddress.postCode"
-              control={control}
-              rules={{ required: "Post Code is required" }}
-              render={({ field }) => (
-                <InputField
-                  label="Post Code"
-                  type="text"
-                  {...field}
-                  error={errors.senderAddress?.postCode?.message}
-                />
-              )}
+              validation={{ required: "Required" }}
+              error={errors.senderAddress?.postCode}
             />
-            <Controller
+            <InputField
+              label={<Text children={"Country"} />}
+              register={register}
               name="senderAddress.country"
-              control={control}
-              rules={{ required: "Country is required" }}
-              render={({ field }) => (
-                <InputField
-                  label="Country"
-                  type="text"
-                  {...field}
-                  error={errors.senderAddress?.country?.message}
-                />
-              )}
+              validation={{ required: "Required" }}
+              error={errors.senderAddress?.country}
             />
           </div>
-        </div>
+
+           {/* Client Address */}
         <div className={styles.bill__reciever}>
-          <Headline className="form__captions" variant="h4">
-            Bill To
-          </Headline>
-          <Controller
+          <Headline className="form__captions" variant="h4">Bill To</Headline>
+          <InputField
+            label={<Text children={"Client’s Name"} />}
+            register={register}
             name="clientName"
-            control={control}
-            rules={{ required: "Client’s Name is required" }}
-            render={({ field }) => (
-              <InputField
-                label="Client’s Name"
-                type="text"
-                {...field}
-                error={errors.clientName?.message}
-              />
-            )}
+            validation={{ required: "Client’s Name is required" }}
+            error={errors.clientName}
           />
-          <Controller
+          <InputField
+            label={<Text children={"Client’s Email"} />}
+            register={register}
             name="clientEmail"
-            control={control}
-            rules={{
+            validation={{ 
               required: "Client’s Email is required",
-              pattern: {
-                value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
-                message: "Invalid email address"
+              pattern: { 
+                value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/, 
+                message: "Invalid email address" 
               }
             }}
-            render={({ field }) => (
-              <InputField
-                label="Client’s Email"
-                type="email"
-                {...field}
-                error={errors.clientEmail?.message}
-              />
-            )}
+            error={errors.clientEmail}
           />
-          <Controller
+          <InputField
+            label= {<Text children={"Street Address"} />}
+            register={register}
             name="clientAddress.street"
-            control={control}
-            rules={{ required: "Client’s Street Address is required" }}
-            render={({ field }) => (
-              <InputField
-                label="Street Address"
-                type="text"
-                {...field}
-                error={errors.clientAddress?.street?.message}
-              />
-            )}
+            validation={{ required: "Client’s Street Address is required" }}
+            error={errors.clientAddress?.street}
           />
           <div className={styles.form__group}>
-            <Controller
+            <InputField
+              label={<Text children={"City"} />}
+              register={register}
               name="clientAddress.city"
-              control={control}
-              rules={{ required: "City is required" }}
-              render={({ field }) => (
-                <InputField
-                  label="City"
-                  type="text"
-                  {...field}
-                  error={errors.clientAddress?.city?.message}
-                />
-              )}
+              validation={{ required: "Required" }}
+              error={errors.clientAddress?.city}
             />
-            <Controller
+            <InputField
+              label={<Text children={"Post Code"} />}
+              register={register}
               name="clientAddress.postCode"
-              control={control}
-              rules={{ required: "Post Code is required" }}
-              render={({ field }) => (
-                <InputField
-                  label="Post Code"
-                  type="text"
-                  {...field}
-                  error={errors.clientAddress?.postCode?.message}
-                />
-              )}
+              validation={{ required: "Required" }}
+              error={errors.clientAddress?.postCode}
             />
-            <Controller
+            <InputField
+              label={<Text children={"Country"} />}
+              register={register}
               name="clientAddress.country"
-              control={control}
-              rules={{ required: "Country is required" }}
-              render={({ field }) => (
-                <InputField
-                  label="Country"
-                  type="text"
-                  {...field}
-                  error={errors.clientAddress?.country?.message}
-                />
-              )}
+              validation={{ required: "Required" }}
+              error={errors.clientAddress?.country}
             />
           </div>
           <div className={styles.form__group}>
-            <Controller
-              name="invoiceDate"
-              control={control}
-              rules={{ required: "Invoice Date is required" }}
-              render={({ field }) => (
-                <InputField
-                  label="Invoice Date"
-                  type="date"
-                  {...field}
-                  error={errors.invoiceDate?.message}
-                />
-              )}
+            <InputField
+              type={"date"}
+              label={<Text class_="caption" children={"Invoice Date"} />}
+              register={register}
+              name="createdAt"
+              validation={{ required: "Required" }}
+              error={errors.createdAt}
             />
-            <Controller
+            <InputField
+              label={<Text class_="caption" children={"Payment Terms"} />}
+              register={register}
               name="paymentTerms"
-              control={control}
-              rules={{ required: "Payment Terms is required" }}
-              render={({ field }) => (
-                <InputField
-                  label="Payment Terms"
-                  type="number"
-                  {...field}
-                  error={errors.paymentTerms?.message}
-                />
-              )}
+              validation={{ 
+                required: "Payment Terms is required",
+                min: { value: 1, message: "Minimum 1 day required" },
+                max: { value: 365, message: "Maximum 365 days allowed" }
+              }}
+              error={errors.paymentTerms}
             />
           </div>
-          <Controller
-            name="projectDescription"
-            control={control}
-            rules={{ required: "Project Description is required" }}
-            render={({ field }) => (
-              <InputField
-                label="Project Description"
-                type="text"
-                {...field}
-                error={errors.projectDescription?.message}
-              />
-            )}
+          <InputField
+            label= {<Text children={"Project Description"} />}
+            register={register}
+            name="description"
+            validation={{ required: "Project Description is required" }}
+            error={errors.description}
           />
+          <div className={styles.vertical__spacer} />
         </div>
+        </div>
+
         <div className={styles.action__buttons}>
-          <Button
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault();
-              handleDiscard();
-            }}
-            size="lg"
-            radius="full"
-            bgColor="tertiary"
-            children={"Discard"}
-          />
+          <Button onClick={(e) => { e.preventDefault(); handleDiscard(); }} size="lg" radius="full" bgColor="tertiary" children={"Discard"} />
           <div className={styles.right__action_buttons}>
-            <Button
-              size="lg"
-              radius="full"
-              bgColor="danger"
-              children={"Save as Draft"}
-            />
-            <Button
-              size="lg"
-              radius="full"
-              bgColor="primary"
-              children={"Save & Send"}
-              type="submit"
-            />
+            <Button size="lg" radius="full" bgColor="danger" children={"Save as Draft"} onClick={handleSaveAsDraft} />
+            <Button size="lg" radius="full" bgColor="primary" children={"Save & Send"} onClick={handleSaveAndSend} />
           </div>
         </div>
       </form>

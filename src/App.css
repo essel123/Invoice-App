@@ -8,7 +8,6 @@
 
 :root {
   --bg-color: rgb(216, 238, 247);
-  
 }
 
 /* Dark theme */
@@ -32,19 +31,16 @@ main {
   max-width: 800px;
   width: 100%;
   margin: auto;
-  
-  
 }
-.center{
+.center {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 .scrolling {
-
   overflow-y: scroll;
   height: 100%;
-  max-height: 450px;
+  max-height: 75vh;
 }
 
 .scrolling::-webkit-scrollbar {
@@ -53,6 +49,17 @@ main {
 
 .home {
   display: flex;
+}
+
+.rightElements {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.rightElements,
+.leftElements {
+  margin-bottom: 60px;
 }
 
 @media (max-width: 768px) {

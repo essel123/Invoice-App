@@ -4,7 +4,7 @@ interface ButtonProps {
   size: "sm" | "md" | "lg";
   radius: "none" | "sm" | "md" | "lg" | "full";
   bgColor: "primary" | "secondary" | "success" | "danger" | "tertiary";
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children?: React.ReactNode;
   type?: "submit" | "reset" | "button";
 }

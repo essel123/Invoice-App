@@ -7,8 +7,12 @@
   justify-content: space-around;
   align-items: center;
   margin-bottom: 16px;
+  
 }
 
+.invoice__details{
+  overflow: hidden;
+}
 :root {
   --invoice-bg-color: rgba(255, 255, 255, 1);
 }

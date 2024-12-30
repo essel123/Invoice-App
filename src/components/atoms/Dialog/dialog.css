@@ -8,11 +8,11 @@
   z-index: 1000;
 }
 
-/* .center {
+.center {
   display: flex;
   justify-content: center;
   align-items: center;
-} */
+}
 
 .dialog-content {
   width: 100%;
@@ -29,18 +29,18 @@
   overflow-y: auto;
 }
 
-/* Style the scrollbar itself */
-::-webkit-scrollbar {
-  width: 10px; /* Width of the vertical scrollbar */
-  height: 10px; /* Height of the horizontal scrollbar */
+/* 
+.dialog-content::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
 }
 
-/* Style the scrollbar thumb (the draggable part) */
-::-webkit-scrollbar-thumb {
-  background: #888; 
-  border-radius: 10px; 
+.dialog-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
 }
 
+*/
 .dialog-content::-webkit-scrollbar {
   display: none;
 }
@@ -76,7 +76,7 @@
 
 @media (min-width: 769px) {
   .dialog-content {
-    width: 40%;
+    width: 50%;
     height: 100%;
   }
 }

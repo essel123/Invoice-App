@@ -13,13 +13,13 @@
   border: var(--input-border);
 }
 
-.error{
-    color: red;
-    font-size: 10px;
+.error {
+  color: red;
+  font-size: 10px;
 }
 
-label{
-    margin-top: 10px;
+label {
+  margin-top: 10px;
 }
 
 .inputField:focus {
@@ -39,4 +39,11 @@ label{
 [data-theme="light"] {
   --input-bg: rgba(255, 255, 255, 1);
   --input-border: 1.5px solid rgba(223, 227, 250, 1);
+}
+
+.deleteInvoice {
+  background: #fffefe;
+  max-width: 480px;
+  width: 100%;
+  padding: 48px;
 }

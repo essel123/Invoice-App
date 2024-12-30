@@ -17,8 +17,6 @@
   color: #33d69f;
 }
 
-
-
 .badge-pending {
   background-color: rgba(255, 143, 0, 0.1); /* Orange */
   color: #ff8f00;
@@ -34,10 +32,10 @@
   height: 8px;
   top: 4px;
   gap: 0px;
- border-radius: 50%;
+  border-radius: 50%;
 }
 .circle-paid {
-  background-color: rgba(255, 143, 0, 1);
+  background-color: #33d69f;
 }
 .circle-pending {
   background: #ff8f00;

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+// Address type definition
 type Address = {
   street: string;
   city: string;
@@ -7,6 +8,7 @@ type Address = {
   country: string;
 };
 
+// Item type definition
 type Item = {
   name: string;
   quantity: number;
@@ -14,6 +16,7 @@ type Item = {
   total: number;
 };
 
+// Invoice type definition
 type Invoice = {
   id: string;
   createdAt: string;
@@ -29,18 +32,49 @@ type Invoice = {
   total: number;
 };
 
-type InvoiceState = {
+// Invoice states definition
+type InvoiceStates = {
   invoices: Invoice[];
+  invoice: Invoice;
   isOpen: boolean;
   isDarkMode: boolean;
-  delete: boolean;
+  isDelete: boolean;
+  selectedInvoice: string;
+  isEdit: boolean;
 };
 
-const initialState: InvoiceState = {
+// Initial state
+const initialState: InvoiceStates = {
+  invoice: {
+    id: "",
+    createdAt: "",
+    paymentDue: "",
+    description: "",
+    paymentTerms: 0,
+    clientName: "",
+    clientEmail: "",
+    status: "",
+    senderAddress: {
+      street: "",
+      city: "",
+      postCode: "",
+      country: ""
+    },
+    clientAddress: {
+      street: "",
+      city: "",
+      postCode: "",
+      country: ""
+    },
+    items: [],
+    total: 0
+  },
+  selectedInvoice: "",
   invoices: [],
   isOpen: false,
   isDarkMode: false,
-  delete: false
+  isDelete: false,
+  isEdit: false
 };
 
 export const stateSlice = createSlice({
@@ -63,16 +97,28 @@ export const stateSlice = createSlice({
         state.invoices[index] = action.payload;
       }
     },
-
+    updateInvoiceStatusToPaid: (state, action: PayloadAction<string>) => {
+      const invoice = state.invoices.find(
+        invoice => invoice.id === action.payload
+      );
+      if (invoice) {
+        invoice.status = "paid";
+      }
+    },
     setDialog: (state, action: PayloadAction<boolean>) => {
       state.isOpen = action.payload;
     },
     setDarkMode: (state, action: PayloadAction<boolean>) => {
       state.isDarkMode = action.payload;
     },
-
     setDelete: (state, action: PayloadAction<boolean>) => {
-      state.delete = action.payload;
+      state.isDelete = action.payload;
+    },
+    setSelectedInvoice: (state, action: PayloadAction<string>) => {
+      state.selectedInvoice = action.payload;
+    },
+    setEdit: (state, action: PayloadAction<boolean>) => {
+      state.isEdit = action.payload;
     }
   }
 });
@@ -81,9 +127,12 @@ export const {
   addInvoice,
   removeInvoice,
   updateInvoice,
+  updateInvoiceStatusToPaid,
   setDialog,
   setDarkMode,
   setDelete,
+  setSelectedInvoice,
+  setEdit
 } = stateSlice.actions;
 
 export default stateSlice.reducer;

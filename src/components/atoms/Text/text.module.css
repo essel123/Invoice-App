@@ -17,8 +17,9 @@
   text-align: right;
 }
 
-.caption__green {
-  background: green;
+.error {
+  color: red;
+  font-size: 10px;
 }
 
 :root {
