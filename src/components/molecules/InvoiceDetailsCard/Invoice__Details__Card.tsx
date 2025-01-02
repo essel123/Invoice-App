@@ -8,12 +8,7 @@ import Badge from "../../atoms/Badge/Badge";
 import Header from "../../molecules/Header/Header";
 import Icon from "../../atoms/Icon/Icon";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
-import {
-  setDelete,
-  setDialog,
-  setEdit,
-  updateInvoiceStatusToPaid
-} from "../../../State/stateSlice";
+import { setDelete, setDialog, setEdit } from "../../../State/stateSlice";
 import { useNavigate } from "react-router-dom";
 
 interface Address {
@@ -79,9 +74,6 @@ function InvoiceDetailsCard({
 
   const isOpen = useAppSelector(state => state.pageState.isOpen);
   const dispatch = useAppDispatch();
-  const selectedInvoice = useAppSelector(
-    state => state.pageState.selectedInvoice
-  );
 
   const handleEdit = () => {
     dispatch(setEdit(true));
@@ -95,7 +87,6 @@ function InvoiceDetailsCard({
   };
 
   const handleMarkAsPaid = () => {
-    dispatch(updateInvoiceStatusToPaid(selectedInvoice));
     navigate("/");
   };
 
@@ -103,7 +94,7 @@ function InvoiceDetailsCard({
     <section className={styles.invoice__details}>
       <Headline
         children={
-          <span>
+          <span className={styles.goBack}>
             <Icon
               size="sm"
               isClickable={true}

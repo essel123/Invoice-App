@@ -39,6 +39,12 @@
   padding-right: 100px;
 }
 
+.goBack {
+  height: 100px !important;
+  margin-bottom: 10px !important;
+  padding-bottom: 12px !important;
+}
+
 .itemsAmount {
   width: 100%;
   background: var(--itemsAmount-bg);

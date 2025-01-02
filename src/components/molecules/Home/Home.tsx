@@ -1,7 +1,7 @@
 import Dialog from "../../atoms/Dialog/Dialog";
 import Delete from "../Delete/Delete";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
-
+import data from "../../../assets/data.json";
 import "../../../App.css";
 import Sidebar from "../SideBar/SideBar";
 import Header from "../Header/Header";
@@ -24,7 +24,7 @@ import No__Invoice from "../../atoms/NoInvoice/No__Invoice";
 
 function Home() {
   const isDelete = useAppSelector(state => state.pageState.isDelete);
-  const invoices = useAppSelector(state => state.pageState.invoices);
+
   const navigate = useNavigate();
   const isOpen = useAppSelector(state => state.pageState.isOpen);
   const selectedInvoice = useAppSelector(
@@ -37,7 +37,7 @@ function Home() {
     dispatch(setDialog(!isOpen));
   };
 
-  const InvoicesList = invoices.map(invoice =>
+  const InvoicesList = data.map(invoice =>
     <Invoice
       key={invoice.id}
       id={invoice.id}
@@ -52,7 +52,7 @@ function Home() {
     />
   );
 
-  const invoiceDetails = invoices.map(invoice => {
+  const invoiceDetails = data.map(invoice => {
     if (invoice.id === selectedInvoice) {
       return (
         <InvoiceDetailsCard
@@ -63,9 +63,9 @@ function Home() {
           invoiceDate={invoice.createdAt}
           projectDescription={invoice.description}
           id={invoice.id}
-          items={[]}
+          items={invoice.items}
           status={invoice.status}
-          amountDue={0}
+          amountDue={invoice.total}
         />
       );
     }
@@ -80,9 +80,9 @@ function Home() {
             <br />
             <Text
               class_="caption"
-              children={` ${invoices.length === 0
+              children={` ${data.length === 0
                 ? "No invoice"
-                : `There are ${invoices.length} total invoices`}`}
+                : `There are ${data.length} total invoices`}`}
             />
           </div>
         }
@@ -113,7 +113,7 @@ function Home() {
         }
       />
       <div className="scrolling">
-        {invoices.length === 0 ? <No__Invoice /> : InvoicesList}
+        {data.length === 0 ? <No__Invoice /> : InvoicesList}
       </div>
     </section>
   );

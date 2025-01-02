@@ -92,7 +92,7 @@ function Form() {
     total: 0   
   };
 
-  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>({ defaultValues });
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>({ defaultValues });
 
   const onSubmit = (data: FormData, status: string) => {
     const invoiceData = {
@@ -118,10 +118,7 @@ function Form() {
     handleSubmit((data) => onSubmit(data, 'pending'))();
   };
 
-  const handleDiscard = () => {
-    reset();
-  };
-
+ 
   const [items, setItems] = useState([
     { name: "", quantity: 1, price: 0, total: 0 }
   ]);
@@ -262,44 +259,65 @@ function Form() {
             error={errors.description}
           />
 
-        <div className={styles.items__header}>
-          <Text class_="caption" children="Item Name" />
-          <Text class_="caption" children="Qty." />
-          <Text class_="caption" children="Price" />
-          <Text class_="caption" children="Total" />
-        </div>
+          <div className={styles.items__header}>
+            
+           
+           
+            <Text class_="caption" children="Total" />
+          </div>
 
-        <div className="items">
+          <div className="items">
+            <table className={styles.itemTable}>
+              <thead>
+              <tr>
+                <td><Text class_="caption" children="Item Name" /></td>
+                <td> <Text class_="caption" children="Qty." /></td>
+                <td> <Text class_="caption" children="Price" /></td>
+                <td> <Text class_="caption" children="Total" /></td>
+                <td></td>
+              </tr>
+              </thead>
+              <tbody>
                 {items.map((item, index) => (
-                  <div key={index} className={styles.itemRow}>
-                    <input
-                      type="text"
-                      value={item.name}
-                      placeholder="Item Name"
-                      onChange={(e) => handleChange(index, "name", e.target.value)}
-                    />
-
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      placeholder="Qty"
-                      onChange={(e) =>
-                        handleChange(index, "quantity", parseInt(e.target.value, 10))
-                      }
-                    />
-                    <input
-                      type="text"
-                      value={item.price}
-                      placeholder="Price"
-                      onChange={(e) =>
-                        handleChange(index, "price", parseFloat(e.target.value))
-                      }
-                    />
-                  
-                  </div>
+                  <tr key={index} className={styles.itemRow}>
+                    <td>
+                      <input
+                        type="text"
+                        value={item.name}
+                        placeholder="Item Name"
+                        onChange={(e) => handleChange(index, "name", e.target.value)}
+                        aria-label="Item Name"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className={styles.quantity}
+                        type="text"
+                        value={item.quantity}
+                        placeholder="Qty"
+                        onChange={(e) => handleChange(index, "quantity", e.target.value)}
+                        aria-label="Quantity"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value={item.price}
+                        placeholder="Price"
+                        onChange={(e) => handleChange(index, "price", e.target.value)}
+                        aria-label="Price"
+                      />
+                    </td>
+                    <td>
+                      <Text children={item.total} />
+                    </td>
+                    <td><Icon src={"../../../../public/assets/icon-delete.svg"} alt={""}  isClickable={true} onClick={()=>null}/></td>
+                  </tr>
                 ))}
-        </div>
-       
+              </tbody>
+            </table>
+          </div>
+
            <Button size="lg" radius="full" bgColor="tertiary" children={<span><Icon src={"../assets/"} alt={""} />Add New Item</span>} btnwidth="addbtn" onClick={(e)=>{
             e.preventDefault();
             setItems([...items, { name: "", quantity: 1, price: 0, total: 0 }]);
@@ -315,9 +333,9 @@ function Form() {
             <Button size="lg" radius="full" bgColor="primary" children={"Save Changes"} onClick={handleSaveAndSend} />
         
         </div>:<div className={styles.action__buttons}>
-          <Button onClick={(e) => { e.preventDefault(); handleDiscard(); }} size="lg" radius="full" bgColor="tertiary" children={"Discard"} />
+          <Button onClick={(e) => { e.preventDefault();}} size="lg" radius="full" bgColor="tertiary" children={"Discard"} />
           <div className={styles.right__action_buttons}>
-            <Button size="lg" radius="full" bgColor="danger" children={"Save as Draft"} onClick={handleSaveAsDraft} />
+            <Button size="lg" radius="full" bgColor="danger" children={"Save as Draft"} />
             <Button size="lg" radius="full" bgColor="primary" children={"Save & Send"} onClick={handleSaveAndSend} />
           </div>
         </div>}

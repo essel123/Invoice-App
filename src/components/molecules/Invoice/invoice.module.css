@@ -5,20 +5,45 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  
 }
 
-.invoice__details{
-  overflow: hidden;
+.invoice__details,
+.invoice__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
+/* .desktopview{
+  display: none;
+} */
+
 :root {
   --invoice-bg-color: rgba(255, 255, 255, 1);
 }
 [data-theme="dark"] {
   --invoice-bg-color: rgba(30, 33, 57, 1);
-
 }
 
 [data-theme="light"] {
   --invoice-bg-color: rgba(255, 255, 255, 1);
+}
+@media (max-width: 450px) {
+  .invoice__details {
+    flex-direction: column;
+    gap: 5px;
+    text-align: start;
+  }
+
+  .invoice__total {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mobileview {
+    display: none;
+  }
+  .desktopview {
+    display: none;
+  }
 }

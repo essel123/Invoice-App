@@ -11,11 +11,12 @@ type DeleteProps = {
 };
 function Delete({ id }: DeleteProps) {
   const isOpen = useAppSelector(state => state.pageState.isOpen);
-
-  const selectedInvoice = useAppSelector( state => state.pageState.selectedInvoice);
+  const selectedInvoice = useAppSelector(
+    state => state.pageState.selectedInvoice
+  );
 
   const dispatch = useAppDispatch();
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
   const handleCancel = () => {
     dispatch(setDialog(!isOpen));
   };

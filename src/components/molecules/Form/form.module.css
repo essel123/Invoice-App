@@ -17,7 +17,8 @@
   margin-top: 30px;
 }
 
-.action__buttons,.edit__action__buttons {
+.action__buttons,
+.edit__action__buttons {
   width: 100%;
   max-width: 640px;
   border-radius: 20px;
@@ -68,8 +69,8 @@ select {
 }
 
 option {
- position: relative;
- top: 20px;
+  position: relative;
+  top: 20px;
   background: var(--input-bg);
 }
 
@@ -85,7 +86,7 @@ input[type="date"] {
   background: var(--input-bg);
   transition: border-color 0.3s ease-in-out;
 }
-.edit__action__buttons{
+.edit__action__buttons {
   display: flex;
   justify-content: end;
   gap: 20px;
@@ -107,6 +108,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .itemRow {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 10px;
 }
 
@@ -123,6 +125,10 @@ input:focus {
 }
 .vertical__spacer {
   height: 100px;
+}
+
+.quantity {
+  width: 50px;
 }
 
 :root {
@@ -143,17 +149,75 @@ input:focus {
   --action__buttons-bg: #ffffff;
 }
 
-@media (max-width: 768px) {
-  .action__buttons {
-    max-width: 535px;
-  }
-}
-
-
-@media (min-width:1440px) {
+@media (min-width: 1440px) {
   .action__buttons {
     max-width: 960px;
     width: 100%;
   }
-  
+}
+
+.items {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.itemTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.itemTable td input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.items__header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.itemRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.itemRow td input {
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .action__buttons {
+    max-width: 535px;
+  }
+  .items__header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .items__header .caption {
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .itemRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .itemRow td {
+    width: 100%; /* Makes inputs full-width on small screens */
+    margin-bottom: 10px;
+  }
+  .action__buttons {
+    border-radius: none !important;
+  }
 }
