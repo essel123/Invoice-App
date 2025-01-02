@@ -1,4 +1,5 @@
 import Badge from "../../atoms/Badge/Badge";
+import Button from "../../atoms/Button/Button";
 import Headline from "../../atoms/Headline/Headline";
 import Icon from "../../atoms/Icon/Icon";
 import { Text } from "../../atoms/Text/Text";
@@ -22,21 +23,29 @@ function Invoice({
   onClick
 }: InvoiceProps) {
   return (
-    <div className={styles.invoice}>
-      <Headline children={`#${id}`} className="headline" />
-      <Text children={paymentDue} />
-      <Text children={clientName} />
-      <Headline children={`£${total}`} />
-      <Badge status={status} />
-
-      <Icon
-        src={"../assets/icon-arrow-right.svg"}
-        alt={""}
-        size="sm"
-        isClickable={true}
-        onClick={onClick}
-      />
-    </div>
+    <Button
+    onClick={onClick}
+      size={"lg"}
+      radius={"lg"}
+      bgColor={"tertiary"}
+      btnwidth="invoicebtn"
+      children={
+        <span className={styles.invoice}>
+          <Headline children={`#${id}`} className="headline" />
+          <Text children={paymentDue} />
+          <Text children={clientName} />
+          <Headline children={`£${total}`} />
+          <Badge status={status} />
+          <Icon
+            src={"../assets/icon-arrow-right.svg"}
+            alt={""}
+            size="sm"
+            isClickable={true}
+            onClick={onClick}
+          />
+        </span>
+      }
+    />
   );
 }
 

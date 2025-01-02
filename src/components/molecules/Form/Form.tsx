@@ -2,10 +2,10 @@ import { useForm } from "react-hook-form";
 import Button from "../../atoms/Button/Button";
 import Headline from "../../atoms/Headline/Headline";
 import styles from "./form.module.css";
-
 import { Text } from "../../atoms/Text/Text";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
 import { addInvoice, setDialog } from "../../../State/stateSlice";
+import { useState } from "react";
 
 interface Address {
   street: string;
@@ -35,7 +35,19 @@ interface FormData {
   total: number;
 }
 
-const InputField = ({ label, register, name, validation, error, type }: any) => (
+import { FieldError, UseFormRegister } from "react-hook-form";
+import Icon from "../../atoms/Icon/Icon";
+
+interface InputFieldProps {
+  label: React.ReactNode;
+  register: UseFormRegister<any>;
+  name: string;
+  validation?: any;
+  error?: FieldError;
+  type?: string;
+}
+
+const InputField = ({ label, register, name, validation, error, type }: InputFieldProps) => (
   <div className={styles.input__field}>
     <div className={styles.error__label}> 
       <label>{label} </label>{error &&  <Text class_="error" children={`${error.message}`} />}
@@ -48,6 +60,7 @@ const InputField = ({ label, register, name, validation, error, type }: any) => 
     />
   </div>
 );
+
 
 function Form() {
   function generateInvoiceId() {
@@ -109,6 +122,24 @@ function Form() {
     reset();
   };
 
+  const [items, setItems] = useState([
+    { name: "", quantity: 1, price: 0, total: 0 }
+  ]);
+
+  // Handle input changes
+  const handleChange = (index: number, field: keyof Item, value: string | number) => {
+    const updatedItems = [...items];
+
+    // Update the value of the specified field
+    updatedItems[index][field] = value as never;
+
+    // Calculate total if price or quantity changes
+    if (field === "price" || field === "quantity") {
+      updatedItems[index].total =
+        updatedItems[index].quantity * updatedItems[index].price;
+    }
+    setItems(updatedItems);
+  };
   return (
     <div className={styles.form__page}>
       <Headline variant="h1"> {isEdit ? `Edit #${selectedInvoice}` : 'New Invoice'}</Headline>
@@ -208,17 +239,20 @@ function Form() {
               validation={{ required: "Required" }}
               error={errors.createdAt}
             />
-            <InputField
-              label={<Text class_="caption" children={"Payment Terms"} />}
-              register={register}
-              name="paymentTerms"
-              validation={{ 
-                required: "Payment Terms is required",
-                min: { value: 1, message: "Minimum 1 day required" },
-                max: { value: 365, message: "Maximum 365 days allowed" }
-              }}
-              error={errors.paymentTerms}
-            />
+            <div>
+              <Text class_="caption" children={"Payment Terms"} />
+            <select 
+              {...register("paymentTerms", { required: "Payment Terms is required" })}
+              className={`${styles.paymentTerms} ${errors.paymentTerms ? styles.error : ''}`}
+              aria-invalid={!!errors.paymentTerms}
+            >
+              <option value="1">Next 1 Day</option>
+              <option value="7">Next 7 Days</option>
+              <option value="14">Next 14 Days</option>
+              <option value="30">Next 30 Days</option>
+            </select>
+            {errors.paymentTerms && <Text class_="error" children={`${errors.paymentTerms.message}`} />}
+            </div>
           </div>
           <InputField
             label= {<Text children={"Project Description"} />}
@@ -227,17 +261,66 @@ function Form() {
             validation={{ required: "Project Description is required" }}
             error={errors.description}
           />
-          <div className={styles.vertical__spacer} />
-        </div>
+
+        <div className={styles.items__header}>
+          <Text class_="caption" children="Item Name" />
+          <Text class_="caption" children="Qty." />
+          <Text class_="caption" children="Price" />
+          <Text class_="caption" children="Total" />
         </div>
 
-        <div className={styles.action__buttons}>
+        <div className="items">
+                {items.map((item, index) => (
+                  <div key={index} className={styles.itemRow}>
+                    <input
+                      type="text"
+                      value={item.name}
+                      placeholder="Item Name"
+                      onChange={(e) => handleChange(index, "name", e.target.value)}
+                    />
+
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      placeholder="Qty"
+                      onChange={(e) =>
+                        handleChange(index, "quantity", parseInt(e.target.value, 10))
+                      }
+                    />
+                    <input
+                      type="text"
+                      value={item.price}
+                      placeholder="Price"
+                      onChange={(e) =>
+                        handleChange(index, "price", parseFloat(e.target.value))
+                      }
+                    />
+                  
+                  </div>
+                ))}
+        </div>
+       
+           <Button size="lg" radius="full" bgColor="tertiary" children={<span><Icon src={"../assets/"} alt={""} />Add New Item</span>} btnwidth="addbtn" onClick={(e)=>{
+            e.preventDefault();
+            setItems([...items, { name: "", quantity: 1, price: 0, total: 0 }]);
+           }} />
+          <div className={styles.vertical__spacer} />
+        </div>
+       
+        </div>
+
+        {isEdit?<div className={styles.edit__action__buttons}>
+         
+            <Button size="lg" radius="full" bgColor="tertiary" children={"cancel"} onClick={handleSaveAsDraft} />
+            <Button size="lg" radius="full" bgColor="primary" children={"Save Changes"} onClick={handleSaveAndSend} />
+        
+        </div>:<div className={styles.action__buttons}>
           <Button onClick={(e) => { e.preventDefault(); handleDiscard(); }} size="lg" radius="full" bgColor="tertiary" children={"Discard"} />
           <div className={styles.right__action_buttons}>
             <Button size="lg" radius="full" bgColor="danger" children={"Save as Draft"} onClick={handleSaveAsDraft} />
             <Button size="lg" radius="full" bgColor="primary" children={"Save & Send"} onClick={handleSaveAndSend} />
           </div>
-        </div>
+        </div>}
       </form>
     </div>
   );

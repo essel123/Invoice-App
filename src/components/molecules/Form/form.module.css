@@ -8,6 +8,7 @@
 .form__group {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 30px;
 }
 
@@ -16,7 +17,7 @@
   margin-top: 30px;
 }
 
-.action__buttons {
+.action__buttons,.edit__action__buttons {
   width: 100%;
   max-width: 640px;
   border-radius: 20px;
@@ -51,6 +52,64 @@ input {
   background: var(--input-bg);
 }
 
+.paymentTerms {
+  margin-top: 10px;
+  padding: 10px;
+  cursor: pointer;
+  border: var(--input-border);
+  border-radius: 5px;
+}
+
+select {
+  border: var(--input-border);
+  border-radius: 5px;
+  background: var(--input-bg);
+  cursor: pointer;
+}
+
+option {
+ position: relative;
+ top: 20px;
+  background: var(--input-bg);
+}
+
+select:focus {
+  border-color: #007bff;
+}
+
+input[type="date"] {
+  font-size: 16px;
+  padding: 10px;
+  border: var(--input-border);
+  border-radius: 5px;
+  background: var(--input-bg);
+  transition: border-color 0.3s ease-in-out;
+}
+.edit__action__buttons{
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+}
+input[type="date"]:focus {
+  border-color: #007bff;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(30%) sepia(50%) saturate(300%) hue-rotate(180deg);
+  cursor: pointer;
+}
+
+.items__header {
+  width: 100%;
+  display: flex;
+}
+
+.itemRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
 input:focus {
   border: 1.5px solid #007bff !important;
 }
@@ -82,4 +141,19 @@ input:focus {
   --input-bg: rgba(255, 255, 255, 1);
   --input-border: 1.5px solid rgba(223, 227, 250, 1);
   --action__buttons-bg: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .action__buttons {
+    max-width: 535px;
+  }
+}
+
+
+@media (min-width:1440px) {
+  .action__buttons {
+    max-width: 960px;
+    width: 100%;
+  }
+  
 }
