@@ -105,7 +105,6 @@ function Form() {
   };
 
   const handleSaveAsDraft = (e: React.MouseEvent<HTMLButtonElement>) => {
-  
     e.preventDefault();
     setValue('status', 'draft');
     handleSubmit((data) => onSubmit(data, 'draft'))();
@@ -260,62 +259,49 @@ function Form() {
           />
 
           <div className={styles.items__header}>
-            
-           
-           
-            <Text class_="caption" children="Total" />
+                <Text class_="caption" children="Item Name" />
+                 <Text class_="caption" children="Qty." />
+                 <Text class_="caption" children="Price" />
+                 <Text class_="caption" children="Total" />
+                 
           </div>
 
-          <div className="items">
-            <table className={styles.itemTable}>
-              <thead>
-              <tr>
-                <td><Text class_="caption" children="Item Name" /></td>
-                <td> <Text class_="caption" children="Qty." /></td>
-                <td> <Text class_="caption" children="Price" /></td>
-                <td> <Text class_="caption" children="Total" /></td>
-                <td></td>
-              </tr>
-              </thead>
-              <tbody>
+          <div className={styles.itemTable}>
                 {items.map((item, index) => (
-                  <tr key={index} className={styles.itemRow}>
-                    <td>
+                  <div key={index} className={styles.itemRow}>
+                    
                       <input
+                      className={styles.itemName}
                         type="text"
                         value={item.name}
-                        placeholder="Item Name"
                         onChange={(e) => handleChange(index, "name", e.target.value)}
                         aria-label="Item Name"
                       />
-                    </td>
-                    <td>
+                    
                       <input
                         className={styles.quantity}
                         type="text"
                         value={item.quantity}
-                        placeholder="Qty"
+                  
                         onChange={(e) => handleChange(index, "quantity", e.target.value)}
                         aria-label="Quantity"
                       />
-                    </td>
-                    <td>
+                    
                       <input
+                        className={styles.price}
                         type="text"
                         value={item.price}
-                        placeholder="Price"
+                    
                         onChange={(e) => handleChange(index, "price", e.target.value)}
                         aria-label="Price"
                       />
-                    </td>
-                    <td>
+                    
                       <Text children={item.total} />
-                    </td>
-                    <td><Icon src={"../../../../public/assets/icon-delete.svg"} alt={""}  isClickable={true} onClick={()=>null}/></td>
-                  </tr>
+                    
+                    <Icon src={"../../../../public/assets/icon-delete.svg"} alt={" image of delete icon"}  isClickable={true} size="sm" onClick={()=> alert(index)}/>
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              
           </div>
 
            <Button size="lg" radius="full" bgColor="tertiary" children={<span><Icon src={"../assets/"} alt={""} />Add New Item</span>} btnwidth="addbtn" onClick={(e)=>{

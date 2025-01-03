@@ -57,6 +57,20 @@ main {
   align-items: center;
 }
 
+
+.invoice__count{
+  display: flex;
+  text-align: start;
+}
+
+.mobileview {
+  display: none;
+}
+
+.desktopview {
+  display: flex;
+}
+
 .rightElements,
 .leftElements {
   margin-bottom: 60px;
@@ -84,8 +98,14 @@ main {
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 550px) {
   main {
     width: 100%;
+  }
+  .mobileview {
+    display: flex;
+  }
+  .desktopview {
+    display: none;
   }
 }

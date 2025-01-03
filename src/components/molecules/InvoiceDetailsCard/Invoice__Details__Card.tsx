@@ -42,10 +42,10 @@ interface InvoiceDetailsCardProps {
 function AddressDetails({ address }: { address: Address }) {
   return (
     <div className={styles.Address}>
-      <Text children={`${address.street}`} />
-      <Text children={`${address.city}`} />
-      <Text children={`${address.postCode}`} />
-      <Text children={`${address.country}`} />
+      <Text class_="caption" children={`${address.street}`} />
+      <Text class_="caption" children={`${address.city}`} />
+      <Text class_="caption" children={`${address.postCode}`} />
+      <Text class_="caption" children={`${address.country}`} />
     </div>
   );
 }
@@ -109,7 +109,8 @@ function InvoiceDetailsCard({
         <Header
           leftElements={
             <div className={styles.leftElements}>
-              <Text children={"Status"} class_={status} />{" "}
+              <Text children={"Status"} class_={status} />
+              <br />
               <Badge status={status} />
             </div>
           }

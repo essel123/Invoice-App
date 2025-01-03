@@ -30,25 +30,25 @@ function Invoice({
       bgColor={"tertiary"}
       btnwidth="invoicebtn"
       children={
-        <span className={styles.invoice}>
+        <div className={styles.invoice}>
           <div className={styles.invoice__details}>
-            <Headline children={`#${id}`} className="headline" />
+            <Headline children={<span className={styles.invoiceId}> <h1>#</h1>{id}</span>} className="headline" />
             <Text children={paymentDue} />
             <span className={styles.desktopview}>
-              <Text children={clientName} />
+              <Text class_="description" children={clientName} />
             </span>
-            <span className={styles.desktopview}>
-              <Headline children={`£${total}`} />
+            <span className={styles.mobileview}>
+              <Headline variant="h2" children={`£${total}`} />
             </span>
           </div>
           <div className={styles.invoice__total}>
-            <Text children={clientName} />
-            <span className={styles.mobileview}>
+            <span className={styles.mobileview}><Text children={clientName} /></span>
+            <span className={styles.desktopview}>
               <Headline children={`£${total}`} />
             </span>
             <Badge status={status} />
           </div>
-          <div className={styles.mobileview}>
+          <span className={styles.desktopview}>
             <Icon
               src={"../assets/icon-arrow-right.svg"}
               alt={"image of an arrow pointing right"}
@@ -56,8 +56,8 @@ function Invoice({
               isClickable={true}
               onClick={onClick}
             />
-          </div>
-        </span>
+          </span>
+        </div>
       }
     />
   );

@@ -39,12 +39,6 @@
   padding-right: 100px;
 }
 
-.goBack {
-  height: 100px !important;
-  margin-bottom: 10px !important;
-  padding-bottom: 12px !important;
-}
-
 .itemsAmount {
   width: 100%;
   background: var(--itemsAmount-bg);
@@ -89,13 +83,13 @@ th {
   margin-top: 20px;
 }
 
-@media (max-width: 450px) {
+
+@media (max-width: 550px) {
   .leftElements {
-    max-width: 400px;
-    width: 100% !important;
+    max-width: 550px !important;
+    width: 100%;
     display: flex;
-    justify-content: space-between !important;
-    align-items: center;
+    justify-content: space-between;
   }
 
   .rightElements {

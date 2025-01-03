@@ -11,6 +11,7 @@ import Icon from "../../atoms/Icon/Icon";
 import Headline from "../../atoms/Headline/Headline";
 import { Text } from "../../atoms/Text/Text";
 import Invoice from "../Invoice/Invoice";
+import { useState } from "react";
 import {
   setDelete,
   setDialog,
@@ -24,20 +25,30 @@ import No__Invoice from "../../atoms/NoInvoice/No__Invoice";
 
 function Home() {
   const isDelete = useAppSelector(state => state.pageState.isDelete);
-
   const navigate = useNavigate();
   const isOpen = useAppSelector(state => state.pageState.isOpen);
   const selectedInvoice = useAppSelector(
     state => state.pageState.selectedInvoice
   );
   const dispatch = useAppDispatch();
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+
   const handleClick = () => {
     dispatch(setDelete(false));
     dispatch(setEdit(false));
     dispatch(setDialog(!isOpen));
   };
 
-  const InvoicesList = data.map(invoice =>
+  const handleFilterChange = (selectedValues: string[]) => {
+    setSelectedFilters(selectedValues);
+  };
+
+  const filteredInvoices = data.filter(invoice => {
+    if (selectedFilters.length === 0) return true;
+    return selectedFilters.includes(invoice.status);
+  });
+
+  const InvoicesList = filteredInvoices.map(invoice =>
     <Invoice
       key={invoice.id}
       id={invoice.id}
@@ -56,6 +67,7 @@ function Home() {
     if (invoice.id === selectedInvoice) {
       return (
         <InvoiceDetailsCard
+          key={invoice.id}
           senderAddress={invoice.senderAddress}
           clientAddress={invoice.clientAddress}
           clientName={invoice.clientName}
@@ -69,6 +81,7 @@ function Home() {
         />
       );
     }
+    return null;
   });
 
   const Invoices = (
@@ -80,18 +93,21 @@ function Home() {
             <br />
             <Text
               class_="caption"
-              children={` ${data.length === 0
-                ? "No invoice"
-                : `There are ${data.length} total invoices`}`}
+              children={
+                filteredInvoices.length === 0
+                  ? "No invoices"
+                  : <div className="invoice__count">
+                      <span className="desktopview">{`There are ${filteredInvoices.length} invoices`}</span>
+                      <span className="mobileview">{`${filteredInvoices.length} invoices`}</span>
+                    </div>
+              }
             />
           </div>
         }
         rightElements={
           <div className="rightElements">
             <Filter
-              onSelectionChange={selectedValues => {
-                console.log(selectedValues);
-              }}
+              onSelectionChange={handleFilterChange}
               items={[
                 { title: "Pending", value: "Pending" },
                 { title: "Paid", value: "Paid" },
@@ -113,7 +129,7 @@ function Home() {
         }
       />
       <div className="scrolling">
-        {data.length === 0 ? <No__Invoice /> : InvoicesList}
+        {filteredInvoices.length === 0 ? <No__Invoice /> : InvoicesList}
       </div>
     </section>
   );
@@ -123,8 +139,6 @@ function Home() {
       <Dialog children={isDelete ? <Delete /> : <Form />} />
       <Sidebar />
       <main>
-        {/* Routes for rendering content dynamically */}
-
         <Routes>
           <Route path="/" element={Invoices} />
           <Route
