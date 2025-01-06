@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
-import { addInvoice, setDialog, setNotification, setNotificationType } from "../../../State/stateSlice";
+import { addInvoice, setDialog, setNotification, setNotificationType, updateInvoice } from "../../../State/stateSlice";
 import Button from "../../atoms/Button/Button";
 import Headline from "../../atoms/Headline/Headline";
 import Icon from "../../atoms/Icon/Icon";
@@ -42,7 +42,10 @@ function Form() {
   const isEdit = useAppSelector(state => state.pageState.isEdit);
   const selectedInvoice = useAppSelector(state => state.pageState.selectedInvoice);
   const isOpen = useAppSelector(state => state.pageState.isOpen);
-  const [items, setItems] = useState<Item[]>([]);
+  const invoices =  useAppSelector(state=> state.pageState.invoices);
+  const invoiceSelected = invoices.find(invoice => invoice.id === selectedInvoice);
+
+  const [items, setItems] = useState<Item[]>( isEdit && invoiceSelected? invoiceSelected.items :[]);
 
   const generateInvoiceId = () => {
     const letters = Array.from({ length: 2 }, () => String.fromCharCode(65 + Math.floor(Math.random() * 26))).join('');
@@ -65,9 +68,20 @@ function Form() {
     setValue('total', total);
   };
 
+  const setNotifications = (message:string) => {
+    dispatch(setNotification(true));
+      dispatch(setNotificationType(message))
+      setTimeout(() => {
+      dispatch(setNotification(false));
+      }, 2000);
+
+  }
 
 
-  const defaultValues: FormData = {
+ 
+  const defaultValues: FormData = isEdit && invoiceSelected ? {
+    ...invoiceSelected
+  } : {
     id: generateInvoiceId(),
     senderAddress: { street: "", city: "", postCode: "", country: "" },
     clientAddress: { street: "", city: "", postCode: "", country: "" },
@@ -82,22 +96,32 @@ function Form() {
   };
 
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>({ defaultValues });
-
+ 
   const onSubmit = (data: FormData, status: string) => {
      defaultValues.items = items;
-    const invoiceData = {
+     const invoiceData = {
       ...data,
       status,
       items,
       paymentDue: new Date(new Date().setDate(new Date(data.createdAt).getDate() + data.paymentTerms)).toISOString().split('T')[0],
     };
-    dispatch(addInvoice(invoiceData));
-    dispatch(setDialog(!isOpen));
-    dispatch(setNotification(true));
-    dispatch(setNotificationType('create'))
-    setTimeout(() => {
-      dispatch(setNotification(false));
-    }, 2000);
+   
+
+    if(isEdit === true)
+    {
+
+      dispatch(updateInvoice(invoiceData));
+      dispatch(setDialog(!isOpen));
+      setNotifications("update")
+
+    }
+    else{
+      dispatch(addInvoice(invoiceData));
+      dispatch(setDialog(!isOpen));
+      setNotifications("create")
+      
+    }
+    
   };
 
   const handleSaveAsDraft = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -112,9 +136,20 @@ function Form() {
     handleSubmit((data) => onSubmit(data, 'pending'))();
   };
 
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(setDialog(!isOpen));
+  };
+
   const handleDiscard = () => {
     reset();
   };
+
+  const handleDeleteItem =  (index:number) => {
+    const updatedItems = items.filter((_, i) => i !== index);
+    setItems(updatedItems);
+    calculateTotal(updatedItems);
+  }
 
   return (
     <div className={styles.form__page}>
@@ -271,7 +306,7 @@ function Form() {
                         aria-label="Price"
                       />
                       <Text children={item.total} />
-                      <Icon src={"../assets/icon-delete.svg"} alt={" image of delete icon"} isClickable={true} size="sm" onClick={() => alert(index)} />
+                      <Icon src={"../assets/icon-delete.svg"} alt={" image of delete icon"} isClickable={true} size="sm" onClick={() => handleDeleteItem(index)} />
                     </div>
                   ))}
                 </div>
@@ -295,7 +330,7 @@ function Form() {
 
         {isEdit ? (
           <div className={styles.edit__action__buttons}>
-            <Button size="lg" radius="full" bgColor="tertiary" children={"cancel"} onClick={handleSaveAsDraft} />
+            <Button size="lg" radius="full" bgColor="tertiary" children={"cancel"} onClick={handleCancel} />
             <Button size="lg" radius="full" bgColor="primary" children={"Save Changes"} onClick={handleSaveAndSend} />
           </div>
         ) : (

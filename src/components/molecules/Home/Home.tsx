@@ -15,6 +15,8 @@ import {
   setDelete,
   setDialog,
   setEdit,
+  setNotification,
+  setNotificationType,
   setSelectedInvoice
 } from "../../../State/stateSlice";
 import Form from "../Form/Form";
@@ -52,6 +54,13 @@ function Home() {
       onClick={() => {
         navigate(`/invoice/${invoice.id}`);
         dispatch(setSelectedInvoice(invoice.id));
+        dispatch(setNotification(true));
+        dispatch(setNotificationType("retrieve"));
+        setTimeout(() => {
+          dispatch(setNotification(false));
+        }, 2000);
+
+       
       }}
     />
   );
@@ -129,7 +138,7 @@ function Home() {
 
   return (
     <section className="home">
-      <Dialog children={isDelete ? <Delete /> : <Form />} />
+      <Dialog children={isDelete ? <Delete id={selectedInvoice} /> : <Form />} />
       <Sidebar />
 
       <main>
@@ -141,7 +150,7 @@ function Home() {
               notificationType.trim() === "create"
                 ? "Invoice added successfully"
                 : notificationType.trim() === "delete"
-                  ? "Invoice deleted sunccessfully"
+                  ? "Invoice deleted successfully"
                   : notificationType.trim() === "update"
                     ? "invoice updated successfully"
                     : "Invoice Retrieved"

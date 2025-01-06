@@ -8,9 +8,10 @@ interface InputFieldProps {
   validation?: any;
   error?: FieldError;
   type?: string;
+  value?: string | number | readonly string[] | undefined
 }
 
-const InputField = ({ label, register, name, validation, error, type }: InputFieldProps) => (
+const InputField = ({ label, register, name, validation, error, type,value }: InputFieldProps) => (
   <div className={styles.input__field}>
     <div className={styles.error__label}>
       <label>{label}</label>
@@ -21,6 +22,7 @@ const InputField = ({ label, register, name, validation, error, type }: InputFie
       type={type}
       aria-invalid={!!error}
       {...register(name, validation)}
+      value={value}
     />
   </div>
 );
