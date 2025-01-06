@@ -3,7 +3,7 @@ import styles from "./text.module.css";
 
 interface TextProps {
   children: ReactNode;
-  variant?: "caption" | "description";
+  variant?: "caption" | "description" | "center";
   class_?: string;
 }
 

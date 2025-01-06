@@ -3,7 +3,12 @@ import styles from "./delete.module.css";
 import { Text } from "../../atoms/Text/Text";
 import Button from "../../atoms/Button/Button";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
-import { removeInvoice, setDialog } from "../../../State/stateSlice";
+import {
+  removeInvoice,
+  setDialog,
+  setNotification,
+  setNotificationType
+} from "../../../State/stateSlice";
 import { useNavigate } from "react-router-dom";
 
 type DeleteProps = {
@@ -12,10 +17,12 @@ type DeleteProps = {
 function Delete({ id }: DeleteProps) {
   const isOpen = useAppSelector(state => state.pageState.isOpen);
 
-  const selectedInvoice = useAppSelector( state => state.pageState.selectedInvoice);
+  const selectedInvoice = useAppSelector(
+    state => state.pageState.selectedInvoice
+  );
 
   const dispatch = useAppDispatch();
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
   const handleCancel = () => {
     dispatch(setDialog(!isOpen));
   };
@@ -23,6 +30,11 @@ function Delete({ id }: DeleteProps) {
     handleCancel();
     dispatch(removeInvoice(`${selectedInvoice}`));
     navigate("/");
+    dispatch(setNotification(true));
+    dispatch(setNotificationType("delete"));
+    setTimeout(() => {
+      dispatch(setNotification(false));
+    }, 2000);
   };
   return (
     <div className={styles.deleteInvoiceCard}>

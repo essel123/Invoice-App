@@ -78,7 +78,41 @@
   }
 }
 
+@media (max-width: 768px) {
+  .logo {
+    position: relative;
+    width: 72px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    background: #7c5dfa;
+    height: 80px;
+  }
+
+  .logo_icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+  }
+
+  .ovalbglogo {
+    position: absolute;
+    margin: 0;
+    bottom: 0;
+    background: #9277ff;
+    height: 40px;
+    width: 100%;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+  }
+}
 @media (max-width: 450px) {
+  .sidebar {
+    z-index: 1001;
+  }
 }
 
 :root {

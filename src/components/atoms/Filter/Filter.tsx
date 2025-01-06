@@ -41,9 +41,9 @@ const Filter: React.FC<FilterProps> = ({ items, onSelectionChange }) => {
           variant="h3"
           children={
             <span>
-              Filter by status{" "}
+              Filter
               <Icon
-                src={"../../../../public/assets/icon-arrow-down.svg"}
+                src={"../assets/icon-arrow-down.svg"}
                 alt={""}
               />
             </span>

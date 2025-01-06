@@ -35,46 +35,25 @@ type Invoice = {
 // Invoice states definition
 type InvoiceStates = {
   invoices: Invoice[];
-  invoice: Invoice;
   isOpen: boolean;
   isDarkMode: boolean;
   isDelete: boolean;
   selectedInvoice: string;
   isEdit: boolean;
+  isNotification: boolean;
+  notificationType: string;
 };
 
 // Initial state
 const initialState: InvoiceStates = {
-  invoice: {
-    id: "",
-    createdAt: "",
-    paymentDue: "",
-    description: "",
-    paymentTerms: 0,
-    clientName: "",
-    clientEmail: "",
-    status: "",
-    senderAddress: {
-      street: "",
-      city: "",
-      postCode: "",
-      country: ""
-    },
-    clientAddress: {
-      street: "",
-      city: "",
-      postCode: "",
-      country: ""
-    },
-    items: [],
-    total: 0
-  },
   selectedInvoice: "",
   invoices: [],
   isOpen: false,
   isDarkMode: false,
   isDelete: false,
-  isEdit: false
+  isEdit: false,
+  isNotification: false,
+  notificationType: "delete"
 };
 
 export const stateSlice = createSlice({
@@ -119,6 +98,13 @@ export const stateSlice = createSlice({
     },
     setEdit: (state, action: PayloadAction<boolean>) => {
       state.isEdit = action.payload;
+    },
+
+    setNotification: (state, action: PayloadAction<boolean>) => {
+      state.isNotification = action.payload;
+    },
+    setNotificationType: (state, action: PayloadAction<string>) => {
+      state.notificationType = action.payload;
     }
   }
 });
@@ -132,7 +118,9 @@ export const {
   setDarkMode,
   setDelete,
   setSelectedInvoice,
-  setEdit
+  setEdit,
+  setNotification,
+  setNotificationType
 } = stateSlice.actions;
 
 export default stateSlice.reducer;

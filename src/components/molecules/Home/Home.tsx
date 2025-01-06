@@ -21,10 +21,14 @@ import Form from "../Form/Form";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import InvoiceDetailsCard from "../InvoiceDetailsCard/Invoice__Details__Card";
 import No__Invoice from "../../atoms/NoInvoice/No__Invoice";
+import Notifications from "../../atoms/Notification/Notification";
 
 function Home() {
   const isDelete = useAppSelector(state => state.pageState.isDelete);
   const invoices = useAppSelector(state => state.pageState.invoices);
+  const notificationType = useAppSelector(
+    state => state.pageState.notificationType
+  );
   const navigate = useNavigate();
   const isOpen = useAppSelector(state => state.pageState.isOpen);
   const selectedInvoice = useAppSelector(
@@ -63,9 +67,9 @@ function Home() {
           invoiceDate={invoice.createdAt}
           projectDescription={invoice.description}
           id={invoice.id}
-          items={[]}
+          items={invoice.items}
           status={invoice.status}
-          amountDue={0}
+          amountDue={invoice.total}
         />
       );
     }
@@ -80,9 +84,14 @@ function Home() {
             <br />
             <Text
               class_="caption"
-              children={` ${invoices.length === 0
-                ? "No invoice"
-                : `There are ${invoices.length} total invoices`}`}
+              children={
+                invoices.length === 0
+                  ? "No invoices"
+                  : <div className="invoice__count">
+                      <span className="desktopview">{`There are ${invoices.length} invoices`}</span>
+                      <span className="mobileview">{`${invoices.length} invoices`}</span>
+                    </div>
+              }
             />
           </div>
         }
@@ -122,9 +131,24 @@ function Home() {
     <section className="home">
       <Dialog children={isDelete ? <Delete /> : <Form />} />
       <Sidebar />
+
       <main>
         {/* Routes for rendering content dynamically */}
 
+        <div className="notifications">
+          <Notifications
+            message={
+              notificationType.trim() === "create"
+                ? "Invoice added successfully"
+                : notificationType.trim() === "delete"
+                  ? "Invoice deleted sunccessfully"
+                  : notificationType.trim() === "update"
+                    ? "invoice updated successfully"
+                    : "Invoice Retrieved"
+            }
+            type={notificationType}
+          />
+        </div>
         <Routes>
           <Route path="/" element={Invoices} />
           <Route

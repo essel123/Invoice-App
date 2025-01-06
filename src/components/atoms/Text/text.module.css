@@ -17,6 +17,10 @@
   text-align: right;
 }
 
+.center{
+  text-align: center;
+}
+
 .error {
   color: red;
   font-size: 10px;

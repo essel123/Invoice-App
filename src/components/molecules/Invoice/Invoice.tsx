@@ -24,26 +24,40 @@ function Invoice({
 }: InvoiceProps) {
   return (
     <Button
-    onClick={onClick}
+      onClick={onClick}
       size={"lg"}
       radius={"lg"}
       bgColor={"tertiary"}
       btnwidth="invoicebtn"
       children={
-        <span className={styles.invoice}>
-          <Headline children={`#${id}`} className="headline" />
-          <Text children={paymentDue} />
-          <Text children={clientName} />
-          <Headline children={`£${total}`} />
-          <Badge status={status} />
-          <Icon
-            src={"../assets/icon-arrow-right.svg"}
-            alt={""}
-            size="sm"
-            isClickable={true}
-            onClick={onClick}
-          />
-        </span>
+        <div className={styles.invoice}>
+          <div className={styles.invoice__details}>
+            <Headline children={<span className={styles.invoiceId}> <h1>#</h1>{id}</span>} className="headline" />
+            <Text children={paymentDue} />
+            <span className={styles.desktopview}>
+              <Text class_="description" children={clientName} />
+            </span>
+            <span className={styles.mobileview}>
+              <Headline variant="h2" children={`£${total}`} />
+            </span>
+          </div>
+          <div className={styles.invoice__total}>
+            <span className={styles.mobileview}><Text children={clientName} /></span>
+            <span className={styles.desktopview}>
+              <Headline children={`£${total}`} />
+            </span>
+            <Badge status={status} />
+          </div>
+          <span className={styles.desktopview}>
+            <Icon
+              src={"../assets/icon-arrow-right.svg"}
+              alt={"image of an arrow pointing right"}
+              size="sm"
+              isClickable={true}
+              onClick={onClick}
+            />
+          </span>
+        </div>
       }
     />
   );

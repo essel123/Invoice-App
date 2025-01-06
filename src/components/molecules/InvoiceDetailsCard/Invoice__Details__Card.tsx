@@ -47,10 +47,10 @@ interface InvoiceDetailsCardProps {
 function AddressDetails({ address }: { address: Address }) {
   return (
     <div className={styles.Address}>
-      <Text children={`${address.street}`} />
-      <Text children={`${address.city}`} />
-      <Text children={`${address.postCode}`} />
-      <Text children={`${address.country}`} />
+      <Text class_="description" children={`${address.street}`} />
+      <Text class_="description" children={`${address.city}`} />
+      <Text class_="description" children={`${address.postCode}`} />
+      <Text  class_= "description" children={`${address.country}`} />
     </div>
   );
 }
@@ -92,6 +92,7 @@ function InvoiceDetailsCard({
   const handleDelete = () => {
     dispatch(setDelete(true));
     dispatch(setDialog(!isOpen));
+
   };
 
   const handleMarkAsPaid = () => {
@@ -218,10 +219,10 @@ function InvoiceDetailsCard({
                       <Text children={`${item.quantity}`} />
                     </td>
                     <td>
-                      <Text children={`£${item.price.toFixed(2)}`} />
+                      <Text children={`£${item.price}`} />
                     </td>
                     <td>
-                      <Text children={`£${item.total.toFixed(2)}`} />
+                      <Text children={`£${item.total}`} />
                     </td>
                   </tr>
                 )}
@@ -230,7 +231,7 @@ function InvoiceDetailsCard({
           </div>
           <div className={styles.amountDue}>
             <Text children={"Amount Due"} />
-            <Headline children={`£${amountDue.toFixed(2)}`} />
+            <Headline children={`£${amountDue}`} />
           </div>
         </div>
       </div>

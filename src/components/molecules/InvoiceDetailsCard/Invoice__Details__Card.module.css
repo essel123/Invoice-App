@@ -30,6 +30,7 @@
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 .Address {
   text-align: right;
