@@ -32,7 +32,15 @@ function Invoice({
       children={
         <div className={styles.invoice}>
           <div className={styles.invoice__details}>
-            <Headline children={<span className={styles.invoiceId}> <h1>#</h1>{id}</span>} className="headline" />
+            <Headline
+              children={
+                <span className={styles.invoiceId}>
+                  {" "}<h1>#</h1>
+                  {id}
+                </span>
+              }
+              className="headline"
+            />
             <Text children={paymentDue} />
             <span className={styles.desktopview}>
               <Text class_="description" children={clientName} />
@@ -42,7 +50,9 @@ function Invoice({
             </span>
           </div>
           <div className={styles.invoice__total}>
-            <span className={styles.mobileview}><Text children={clientName} /></span>
+            <span className={styles.mobileview}>
+              <Text children={clientName} />
+            </span>
             <span className={styles.desktopview}>
               <Headline children={`£${total}`} />
             </span>
