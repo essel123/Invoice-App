@@ -1,11 +1,10 @@
 .invoice {
   width: 100%;
-  padding: 16px 5px;
-  border-radius: 8px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   gap: 20px;
+  background: transparent;
 }
 
 .invoice__details,
@@ -16,7 +15,10 @@
   width: 100%;
   gap: 20px !important;
 }
-
+.invoiceId{
+  display: flex;
+  gap: 2px;
+}
 .invoiceId h1{
   color: var(--invoiceId-color);
 }

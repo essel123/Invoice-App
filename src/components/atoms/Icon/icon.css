@@ -1,5 +1,12 @@
+
+.icon_{
+  display: flex !important;
+  flex-direction: row !important;
+}
 .icon {
   display: inline-block;
+  align-items: center;
+  justify-content: center;
   width: 100px;
   height: 100px;
   cursor: pointer;

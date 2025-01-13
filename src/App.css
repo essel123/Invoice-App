@@ -22,8 +22,14 @@
 
 body {
   background: var(--bg-color);
-  font-family: Arial, sans-serif;
+  font-family: 'Spartan';
   transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+@font-face {
+  font-family: 'Spartan';
+  src: url(../public/assets/League_Spartan/LeagueSpartan-VariableFont_wght.ttf);
 }
 
 main {

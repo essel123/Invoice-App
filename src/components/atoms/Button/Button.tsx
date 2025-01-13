@@ -22,6 +22,10 @@ const Button: React.FC<ButtonProps> = ({
     `btn-radius-${radius}`
   ]} ${styles[`btn-${bgColor}`]} ${styles[`${btnwidth}`]}`;
 
+
+
+  
+
   return (
     <button className={buttonClass} onClick={onClick} type={type}>
       {children}

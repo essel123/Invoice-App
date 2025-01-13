@@ -60,7 +60,8 @@ function InvoiceDetailsCard({
   id,
   items,
   amountDue,
-  status
+  status,
+  paymentTerms
 }: InvoiceDetailsCardProps) {
   const navigate = useNavigate();
 
@@ -94,15 +95,16 @@ function InvoiceDetailsCard({
     <section className={styles.invoice__details}>
       <Headline
         children={
-          <span className={styles.goBack}>
+          <div className={styles.goBack} onClick={() => navigate("/")}>
             <Icon
               size="sm"
               isClickable={true}
               src="../assets/icon-arrow-left.svg"
               alt={"go back"}
               onClick={() => navigate("/")}
-            />Go back
-          </span>
+            />
+            Go Back
+          </div>
         }
       />
       <header className={styles.header}>
@@ -162,7 +164,9 @@ function InvoiceDetailsCard({
             <Text class_="caption" children={"Invoice Date"} />
             <Headline children={`${invoiceDate}`} />
             <Text class_="caption" children={"Payment Due"} />
-            <Headline children={calculatePaymentDueDate(invoiceDate, 30)} />
+            <Headline
+              children={calculatePaymentDueDate(invoiceDate, paymentTerms)}
+            />
           </div>
           <div>
             <Text class_="caption" children={"Bill To"} />

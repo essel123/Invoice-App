@@ -1,3 +1,4 @@
+
 import "./icon.css";
 interface IconProps {
   src: string;
@@ -12,6 +13,8 @@ interface IconProps {
 
   onClick?: () => void;
   isClickable?: boolean;
+
+  children?: React.ReactNode;
 }
 
 const Icon = ({
@@ -20,11 +23,13 @@ const Icon = ({
   radius = "rounded",
   size = "sm",
   isClickable = false,
+  children,
   onClick
+  
 }: IconProps) => {
   return (
     <span className={`${isClickable ? "icon" : ""} ${size}`} onClick={onClick}>
-      <img src={src} alt={alt} className={radius} />
+      <img src={src} alt={alt} className={radius} /> {children}
     </span>
   );
 };

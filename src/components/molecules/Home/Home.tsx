@@ -32,6 +32,13 @@ function Home() {
   );
   const dispatch = useAppDispatch();
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const calculatePaymentDueDate = (date: string, terms?: number) => {
+    const dueDate = new Date(date);
+    if (terms) {
+      dueDate.setDate(dueDate.getDate() + terms);
+    }
+    return dueDate.toDateString();
+  };
 
   const handleClick = () => {
     dispatch(setDelete(false));
@@ -54,7 +61,10 @@ function Home() {
       id={invoice.id}
       status={invoice.status}
       clientName={invoice.clientName}
-      paymentDue={invoice.paymentDue}
+      paymentDue={`Due ${calculatePaymentDueDate(
+        invoice.paymentDue,
+        invoice.paymentTerms
+      )}`}
       total={invoice.total}
       onClick={() => {
         navigate(`/invoice/${invoice.id}`);
