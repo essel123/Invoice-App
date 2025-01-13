@@ -104,15 +104,16 @@ function InvoiceDetailsCard({
     <section className={styles.invoice__details}>
       <Headline
         children={
-          <span>
-            <Icon
-              size="sm"
-              isClickable={true}
-              src="../assets/icon-arrow-left.svg"
-              alt={"go back"}
-              onClick={() => navigate("/")}
-            />Go back
-          </span>
+          <div className={styles.goBack} onClick={() => navigate("/")}>
+          <Icon
+            size="sm"
+            isClickable={true}
+            src="../assets/icon-arrow-left.svg"
+            alt={"go back"}
+            onClick={() => navigate("/")}
+          />
+          Go Back
+        </div>
         }
       />
       <header className={styles.header}>
@@ -161,23 +162,28 @@ function InvoiceDetailsCard({
                 </span>
               }
             />
-            <Text children={`${projectDescription}`} />
+            <Text class_="caption" children={`${projectDescription}`} />
           </div>
           <AddressDetails address={senderAddress} />
         </div>
-
+        <br />
         <div className={styles.recipientInfo}>
-          <div>
+         <div className={styles.invoice__details__card__recipient}>
+         <div className={styles.left}>
             <Text class_="caption" children={"Invoice Date"} />
+            
             <Headline children={`${invoiceDate}`} />
+            <br />
             <Text class_="caption" children={"Payment Due"} />
             <Headline children={calculatePaymentDueDate(invoiceDate, 30)} />
           </div>
-          <div>
+          <div className={styles.right}>
             <Text class_="caption" children={"Bill To"} />
             <Headline children={`${clientName}`} />
+            <br />
             <AddressDetails address={clientAddress} />
           </div>
+         </div>
           <div className={styles.email}>
             <Text class_="caption" children={"Sent to"} />
             <Headline

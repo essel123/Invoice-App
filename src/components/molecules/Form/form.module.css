@@ -21,7 +21,6 @@
 .edit__action__buttons {
   width: 100%;
   max-width: 640px;
-  border-radius: 20px;
   padding: 10px;
   padding-left: 10%;
   box-sizing: border-box;
@@ -117,6 +116,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 10px;
 }
 
+
 input:focus {
   border: 1.5px solid #007bff !important;
 }
@@ -168,11 +168,14 @@ input:focus {
   .action__buttons {
     max-width: 960px;
     width: 100%;
+    border-radius: 20px;
   }
   .edit__action__buttons {
     max-width: 960px;
     width: 100%;
+    border-radius: 20px;
   }
+
 }
 
 .items {
@@ -226,9 +229,7 @@ input:focus {
     justify-content: space-between;
     width: 100%;
   }
-  .action__buttons {
-    border-radius: none !important;
-  }
+
   .vertical__spacer{
     height: 200px;
   }
@@ -236,13 +237,16 @@ input:focus {
 
 
 @media (max-width:550px) {
-
   .vertical__spacer{
     height: 200px;
   }
 
   .price{
     max-width: 50px;
+  }
+  .action__buttons,.edit__action__buttons{
+    border-radius: none !important;
+    
   }
   
 }

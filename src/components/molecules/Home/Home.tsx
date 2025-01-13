@@ -59,8 +59,6 @@ function Home() {
         setTimeout(() => {
           dispatch(setNotification(false));
         }, 2000);
-
-       
       }}
     />
   );
@@ -106,16 +104,18 @@ function Home() {
         }
         rightElements={
           <div className="rightElements">
-            <Filter
-              onSelectionChange={selectedValues => {
-                console.log(selectedValues);
-              }}
-              items={[
-                { title: "Pending", value: "Pending" },
-                { title: "Paid", value: "Paid" },
-                { title: "Draft", value: "Draft" }
-              ]}
-            />
+            <div className="filter">
+              <Filter
+                onSelectionChange={selectedValues => {
+                  console.log(selectedValues);
+                }}
+                items={[
+                  { title: "Pending", value: "Pending" },
+                  { title: "Paid", value: "Paid" },
+                  { title: "Draft", value: "Draft" }
+                ]}
+              />
+            </div>
             <Button
               children={
                 <span className="center">
@@ -138,7 +138,9 @@ function Home() {
 
   return (
     <section className="home">
-      <Dialog children={isDelete ? <Delete id={selectedInvoice} /> : <Form />} />
+      <Dialog
+        children={isDelete ? <Delete id={selectedInvoice} /> : <Form />}
+      />
       <Sidebar />
 
       <main>

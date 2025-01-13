@@ -19,7 +19,9 @@
   align-items: center;
   width: 100%;
   background: var(--invoice-bg-color) !important;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+  --webkit-box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+  --moz-box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+  box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
   margin-top: 20px;
 }
 

@@ -143,6 +143,7 @@ function Form() {
 
   const handleDiscard = () => {
     reset();
+    dispatch(setDialog(!isOpen));
   };
 
   const handleDeleteItem =  (index:number) => {

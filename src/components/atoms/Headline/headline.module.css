@@ -16,3 +16,10 @@
 .form__captions {
   color: #7c5dfa;
 }
+
+@media (max-width:550px) {
+  .headline {
+    font-size: 0.9rem;
+  }
+  
+}
