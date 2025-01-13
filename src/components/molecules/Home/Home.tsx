@@ -32,6 +32,7 @@ function Home() {
   );
   const dispatch = useAppDispatch();
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+
   const calculatePaymentDueDate = (date: string, terms?: number) => {
     const dueDate = new Date(date);
     if (terms) {
@@ -50,9 +51,11 @@ function Home() {
     setSelectedFilters(selectedValues);
   };
 
+  // Updated filtering logic
   const filteredInvoices = data.filter(invoice => {
-    if (selectedFilters.length === 0) return true;
-    return selectedFilters.includes(invoice.status);
+    if (!invoice.status) return false; // Ensure the status property exists
+    if (selectedFilters.length === 0) return true; // Show all if no filters are applied
+    return selectedFilters.includes(invoice.status); // Match any selected filter
   });
 
   const InvoicesList = filteredInvoices.map(invoice =>
@@ -116,6 +119,7 @@ function Home() {
         }
         rightElements={
           <div className="rightElements">
+            <div className="filter">
             <Filter
               onSelectionChange={handleFilterChange}
               items={[
@@ -124,6 +128,7 @@ function Home() {
                 { title: "Draft", value: "Draft" }
               ]}
             />
+            </div>
             <Button
               children={
                 <span className="center">

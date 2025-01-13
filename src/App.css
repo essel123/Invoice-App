@@ -86,6 +86,13 @@ main {
   padding: 50px;
 }
 
+@media (min-width:769px) {
+  .filter{
+    margin-right: 60px;
+  }
+  
+}
+
 @media (max-width: 768px) {
   .home {
     display: flex;
