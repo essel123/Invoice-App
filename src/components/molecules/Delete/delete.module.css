@@ -1,0 +1,43 @@
+.deleteInvoiceCard {
+  width: 100%;
+  height: 100vh;
+}
+
+.deleteInvoice {
+  max-width: 480px;
+  width: 100%;
+  height: 250px;
+  background: var(--delete-card-bg-color);
+  padding: 40px;
+  border-radius: 8px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.span {
+  margin-top: 40px;
+}
+.id_deleted{
+  color: #7c5dfa;
+
+}
+.actionButtons {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+  justify-content: end;
+  gap: 10px;
+}
+
+:root {
+  --delete-card-bg-color: rgba(255, 255, 255, 1);
+}
+[data-theme="dark"] {
+  --delete-card-bg-color: #1e2139;
+}
+
+[data-theme="light"] {
+  --delete-card-bg-color: rgba(255, 255, 255, 1);
+}

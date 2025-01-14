@@ -1,42 +1,131 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Default theme (light) */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+:root {
+  --bg-color: #f8f8fb;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Dark theme */
+[data-theme="dark"] {
+  --bg-color: rgba(20, 22, 37, 1);
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --bg-color: #f8f8fb;
+}
+
+body {
+  background: var(--bg-color);
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+main {
+  padding-top: 72px;
+  width: 60%;
+  margin: auto;
+}
+.center {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.scrolling {
+  max-width: 100% !important;
+  overflow-y: scroll;
+  height: 100%;
+  max-height: 75vh;
+}
+
+.scrolling::-webkit-scrollbar {
+  display: none;
+}
+
+.home {
+  display: flex;
+}
+
+.rightElements {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+
+.invoice__count{
+  display: flex;
+  text-align: start;
+}
+
+.mobileview {
+  display: none;
+}
+
+.desktopview {
+  display: flex;
+}
+
+.rightElements,
+.leftElements {
+  margin-bottom: 60px;
+}
+
+.notifications{
+  position: absolute;
+  top: 0;
+  right: 5%;
+}
+
+main {
+  padding: 50px;
+}
+
+@media (min-width:769px) {
+  .filter{
+    margin-right: 60px;
   }
-  to {
-    transform: rotate(360deg);
+  
+}
+
+@media (max-width: 768px) {
+  .home {
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    width: 100%;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@media (max-width: 850px) {
+  .home {
+    display: flex;
+    flex-direction: column;
   }
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+@media (max-width: 550px) {
+  main {
+    width: 100%;
+  }
+  .mobileview {
+    display: flex;
+  }
+  .desktopview {
+    display: none;
+  }
+  .notifications{
+    z-index: 2000;
+    position: absolute;
+    left: 0%;
+    top: 10%;
+    margin: 10%;
+  }
 }
