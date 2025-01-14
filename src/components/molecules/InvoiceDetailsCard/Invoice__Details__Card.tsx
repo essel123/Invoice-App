@@ -104,7 +104,7 @@ function InvoiceDetailsCard({
     <section className={styles.invoice__details}>
       <Headline
         children={
-          <span>
+          <div className={styles.goBack} onClick={() => navigate("/")}>
             <Icon
               size="sm"
               isClickable={true}
@@ -112,7 +112,7 @@ function InvoiceDetailsCard({
               alt={"go back"}
               onClick={() => navigate("/")}
             />Go back
-          </span>
+          </div>
         }
       />
       <header className={styles.header}>
@@ -167,15 +167,17 @@ function InvoiceDetailsCard({
         </div>
 
         <div className={styles.recipientInfo}>
-          <div>
+          <div className={styles.left}>
             <Text class_="caption" children={"Invoice Date"} />
             <Headline children={`${invoiceDate}`} />
+            <br />
             <Text class_="caption" children={"Payment Due"} />
             <Headline children={calculatePaymentDueDate(invoiceDate, 30)} />
           </div>
-          <div>
+          <div className={styles.right}>
             <Text class_="caption" children={"Bill To"} />
             <Headline children={`${clientName}`} />
+            <br />
             <AddressDetails address={clientAddress} />
           </div>
           <div className={styles.email}>

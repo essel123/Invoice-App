@@ -105,6 +105,11 @@ th {
     background: #ffffff;
   }
 }
+
+.goBack{
+  margin-bottom: 20px;
+  cursor: pointer;
+}
 :root {
   --invoive-deatils-card-bg: white;
   --itemsAmount-bg: #f9fafe;
