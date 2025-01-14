@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import "./Dialog.css";
+import "./dialog.css";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
 import { setDialog } from "../../../State/stateSlice";
 
