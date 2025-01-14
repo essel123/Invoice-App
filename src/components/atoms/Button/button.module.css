@@ -1,0 +1,147 @@
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center !important;
+  padding: 10px !important;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  text-align: center !important;
+  transition: all 0.2s ease-in-out;
+  font-size: 15px !important;
+  min-width: 80px;
+  height: 60px !important;
+}
+
+.invoicebtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: var(--invoice-bg-color) !important;
+  --webkit-box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+  --moz-box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+  box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+}
+
+.addbtn {
+  margin-top: 30px;
+  width: 100%;
+  background: #dfe3fa !important;
+}
+
+.invoicebtn:focus {
+  border: 1px solid #7c5dfa;
+}
+.btn-icon {
+  width: 32px;
+}
+
+/* Size variations */
+.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  height: 2rem;
+}
+
+.btn-md {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  height: 2.5rem;
+}
+
+.btn-lg {
+  padding: 12px 8px !important;
+  font-size: 1.25rem;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Border radius variations */
+.btn-radius-none {
+  border-radius: 0px;
+}
+
+.btn-radius-sm {
+  border-radius: 0.25rem;
+}
+
+.btn-radius-md {
+  border-radius: 0.375rem;
+}
+
+.btn-radius-lg {
+  border-radius: 0.5rem;
+}
+
+.btn-radius-full {
+  border-radius: 50rem; 
+}
+
+/* Background color variations */
+.btn-primary {
+  background-color: #7c5dfa;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #9277ff;
+}
+
+.btn-secondary {
+  background-color: #1e2139;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-tertiary {
+  background-color: #dfe3fa;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.btn-danger {
+  background-color: #ec5757;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #ff9797;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 550px) {
+  .btn {
+    font-size: 12px !important;
+  }
+
+  .btn-lg {
+    padding: 8px 4px !important;
+    font-size: 12px !important;
+    height: 3rem;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: none;
+  }
+
+  .invoicebtn {
+    height: 134px !important;
+  }
+}
+
+

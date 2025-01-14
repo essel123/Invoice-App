@@ -1,0 +1,132 @@
+.header {
+  width: 100%;
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  background: var(--invoive-deatils-card-bg);
+  --webkit-box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+  --moz-box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+  box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  height: 80px;
+  margin-bottom: 24px;
+}
+
+.leftElements,
+.rightElements {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.card {
+  padding: 40px;
+  width: 100%;
+  background: var(--invoive-deatils-card-bg);
+  border-radius: 8px;
+  --webkit-box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+  --moz-box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+  box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+}
+
+.senderInfo,
+.recipientInfo {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.Address {
+  text-align: right;
+}
+
+.email {
+  padding-right: 100px;
+}
+
+.itemsAmount {
+  width: 100%;
+  background: var(--itemsAmount-bg);
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.items {
+  padding: 32px;
+}
+
+.goBack{
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.amountDue {
+  text-align: left;
+  height: 80px;
+  width: 100%;
+  background: var(--amountDue-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px;
+  background: var(--amountDue-bg);
+  border-radius: 0px 0px 8px 8px;
+}
+
+table {
+  text-align: left !important;
+  width: 100%;
+  border-collapse: separate;
+}
+
+th,
+td {
+  padding: 10px 15px;
+  text-align: left;
+}
+
+th {
+  font-weight: bold;
+}
+
+.amountDue {
+  margin-top: 20px;
+}
+
+
+@media (max-width: 550px) {
+  .leftElements {
+    max-width: 550px !important;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .rightElements {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #ffffff;
+  }
+}
+:root {
+  --invoive-deatils-card-bg: white;
+  --itemsAmount-bg: #f9fafe;
+  --amountDue-bg: #373b53;
+}
+
+[data-theme="dark"] {
+  --invoive-deatils-card-bg: #1e2139;
+  --itemsAmount-bg: #252945;
+  --amountDue-bg: #0c0e16;
+}
+
+[data-theme="light"] {
+  --invoive-deatils-card-bg: white;
+  --itemsAmount-bg: #f9fafe;
+  --amountDue-bg: #373b53;
+}

@@ -1,0 +1,49 @@
+.inputField {
+  width: 100%;
+  margin-top: 10px;
+  max-width: 504px;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  background: var(--input-bg);
+  border: var(--input-border);
+}
+
+.error {
+  color: red;
+  font-size: 10px;
+}
+
+label {
+  margin-top: 10px;
+}
+
+.inputField:focus {
+  border: 1.5px solid #007bff;
+}
+
+:root {
+  --input-bg: rgba(255, 255, 255, 1);
+  --input-border: 1.5px solid rgba(223, 227, 250, 1);
+}
+
+[data-theme="dark"] {
+  --input-bg: rgba(30, 33, 57, 1);
+  --input-border: 0px solid rgba(55, 59, 83, 1);
+}
+
+[data-theme="light"] {
+  --input-bg: rgba(255, 255, 255, 1);
+  --input-border: 1.5px solid rgba(223, 227, 250, 1);
+}
+
+.deleteInvoice {
+  background: #fffefe;
+  max-width: 480px;
+  width: 100%;
+  padding: 48px;
+}
