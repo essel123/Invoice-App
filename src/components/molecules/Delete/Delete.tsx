@@ -44,7 +44,7 @@ function Delete({ id }: DeleteProps) {
           class_="caption"
           children={
             <span className="span">
-              Are you sure you want to delete invoice # {id || "n/a"}? This
+              Are you sure you want to delete invoice <span className={styles.id_deleted}># {id || "n/a"}</span>? This
               action cannot be undone.
             </span>
           }
