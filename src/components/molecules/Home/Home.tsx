@@ -151,7 +151,7 @@ function Home() {
 
   return (
     <section className="home">
-      <Dialog children={isDelete ? <Delete /> : <Form />} />
+      <Dialog children={isDelete ? <Delete  id={selectedInvoice}/> : <Form />} />
       <Sidebar />
       <main>
         <Routes>

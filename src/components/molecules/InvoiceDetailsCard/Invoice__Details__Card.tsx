@@ -42,10 +42,10 @@ interface InvoiceDetailsCardProps {
 function AddressDetails({ address }: { address: Address }) {
   return (
     <div className={styles.Address}>
-      <Text class_="caption" children={`${address.street}`} />
-      <Text class_="caption" children={`${address.city}`} />
-      <Text class_="caption" children={`${address.postCode}`} />
-      <Text class_="caption" children={`${address.country}`} />
+      <Text class_="" children={`${address.street}`} />
+      <Text class_="" children={`${address.city}`} />
+      <Text class_="" children={`${address.postCode}`} />
+      <Text class_="" children={`${address.country}`} />
     </div>
   );
 }
@@ -160,17 +160,19 @@ function InvoiceDetailsCard({
         </div>
 
         <div className={styles.recipientInfo}>
-          <div>
+          <div className={styles.left}>
             <Text class_="caption" children={"Invoice Date"} />
             <Headline children={`${invoiceDate}`} />
+            <br />
             <Text class_="caption" children={"Payment Due"} />
             <Headline
               children={calculatePaymentDueDate(invoiceDate, paymentTerms)}
             />
           </div>
-          <div>
+          <div className={styles.right}>
             <Text class_="caption" children={"Bill To"} />
             <Headline children={`${clientName}`} />
+            <br />
             <AddressDetails address={clientAddress} />
           </div>
           <div className={styles.email}>

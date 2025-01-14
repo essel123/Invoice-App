@@ -20,6 +20,10 @@
   margin-top: 40px;
 }
 
+.id__deleted{
+  color: #7c5dfa;
+}
+
 .actionButtons {
   width: 100%;
   display: flex;
