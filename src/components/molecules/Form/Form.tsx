@@ -298,7 +298,7 @@ function Form() {
                     
                       <Text children={item.total} />
                     
-                    <Icon src={"../../../../public/assets/icon-delete.svg"} alt={" image of delete icon"}  isClickable={true} size="sm" onClick={()=> alert(index)}/>
+                    <Icon src={"../assets/icon-delete.svg"} alt={" image of delete icon"}  isClickable={true} size="sm" onClick={()=> alert(index)}/>
                   </div>
                 ))}
               
