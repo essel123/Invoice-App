@@ -1,25 +1,40 @@
 .loginpage {
   width: 100%;
   display: flex;
+  /* background-image: url("../assets/bg.png"); */
+  background-repeat: no-repeat;
+  background-size: cover;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  position: relative;
 }
 
-.login__form {
+/* .loginpage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0.97)); 
+  z-index: 1;
+} */
 
+.login__form {
+  background: #ffffff;
   overflow: hidden;
   width: 100%;
   max-width: 450px;
   --webkit-box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
   --moz-box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
   box-shadow: -4px 10px 39px -21px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 2;
   text-align: center;
   border-radius: 12px;
-
-  
 }
-
+ 
 form{
   
     padding: 50px;

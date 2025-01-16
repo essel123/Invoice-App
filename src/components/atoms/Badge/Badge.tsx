@@ -10,7 +10,7 @@ const Badge: React.FC<BadgeProps> = ({ status }) => {
   return (
     <span className={`${styles.badge} ${statusClass}`}>
       <span className={`${styles.circle} ${styles[`circle-${status}`]}`} />{" "}
-      {status.charAt(0).toUpperCase() + status.slice(1)}
+      { status }
     </span>
   );
 };

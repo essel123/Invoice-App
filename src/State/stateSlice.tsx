@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 // Address type definition
 type Address = {
   street: string;
@@ -31,7 +32,7 @@ type Invoice = {
   total: number;
 };
 
-type user = {
+type User = {
   username: string;
   password: string;
   token: string;
@@ -47,9 +48,7 @@ type InvoiceStates = {
   isEdit: boolean;
   isNotification: boolean;
   notificationType: string;
-  user: user;
- 
-
+  user: User;
 };
 
 // Initial state
@@ -61,7 +60,7 @@ const initialState: InvoiceStates = {
   isDelete: false,
   isEdit: false,
   isNotification: false,
-  notificationType: "delete",
+  notificationType: "",
   user: { username: "", password: "",token: "",loggedIn: false,},
 };
 
@@ -71,6 +70,10 @@ export const stateSlice = createSlice({
   reducers: {
     addInvoice: (state, action: PayloadAction<Invoice>) => {
       state.invoices.push(action.payload);
+    },
+
+    setInvoice : (state,action:PayloadAction <Invoice[]>) => {
+      state.invoices = action.payload;
     },
     removeInvoice: (state, action: PayloadAction<string>) => {
       state.invoices = state.invoices.filter(
@@ -116,7 +119,7 @@ export const stateSlice = createSlice({
       state.notificationType = action.payload;
     },
 
-    setUser: (state, action: PayloadAction<{ user: user}>) => {
+    setUser: (state, action: PayloadAction<{ user: User}>) => {
       const { user } = action.payload;
       state.user = user;
     },
@@ -147,6 +150,7 @@ export const {
   setUser,
   logOut,
   setLogin,
+  setInvoice,
 } = stateSlice.actions;
 
 export default stateSlice.reducer;

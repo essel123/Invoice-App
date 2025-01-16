@@ -7,7 +7,7 @@ import Headline from "../../atoms/Headline/Headline";
 import LoadingSpinner from "../../atoms/Loader/Loader";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
-import { setDialog, setUser } from "../../../State/stateSlice";
+import { setDialog, setInvoice, setUser } from "../../../State/stateSlice";
 const  LoginPage = () => {
   type formData = {
     username: string;
@@ -44,15 +44,38 @@ const fetchLogin = async (data: formData) => {
             body: JSON.stringify(data),
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
+        if (response.ok) {
         const result = await response.json();
-         
         const data_ =  userData(data, result.token);
          dispatch(setDialog(!login));
          dispatch(setUser({ user: data_ }));
+
+         try{
+            const incoicesResponse = await fetch("https://invoice-app-bknd-strapi-cloud.onrender.com/invoices", {
+           
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${result.token}`,
+                },
+               
+            });
+    
+            if (incoicesResponse.ok) {
+                const invoiceResult = await incoicesResponse.json();
+                 dispatch(setInvoice(invoiceResult));
+                console.log(invoiceResult);
+    
+            } else {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+         }
+         catch (error) {
+            console.error("Fetching failed:", error);
+         }
+    } else {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
     } catch (error) {
         console.error("Login failed:", error);
     } finally {
@@ -107,4 +130,4 @@ return (
 }
 
 
-export default  LoginPage
+export default LoginPage;

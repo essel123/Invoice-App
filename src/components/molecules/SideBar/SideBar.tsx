@@ -28,7 +28,7 @@ function Sidebar() {
         <div className={styles.avatar}>
           <Avatar src={"../assets/image-avatar.jpg"} alt={"image of avater"} />
           <span className={styles.logout}>
-          <Button size={"sm"} radius={"full"} bgColor="danger" children={"Log out"} onClick={()=>handleLogout()}/>
+          <Button size={"sm"} radius={"md"} bgColor="danger" children={"Log out"} onClick={()=>handleLogout()}/>
           </span>
 
         </div>

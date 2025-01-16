@@ -25,6 +25,7 @@ import InvoiceDetailsCard from "../InvoiceDetailsCard/Invoice__Details__Card";
 import No__Invoice from "../../atoms/NoInvoice/No__Invoice";
 import Notifications from "../../atoms/Notification/Notification";
 import LoginPage from "../LoginPage/LoginPage";
+// import data from '../../../assets/data.json';
 
 function Home() {
   const isDelete = useAppSelector(state => state.pageState.isDelete);
@@ -64,7 +65,7 @@ function Home() {
       }}
     />
   );
-
+console.log('incoices',invoices);
   const invoiceDetails = invoices.map(invoice => {
     if (invoice.id === selectedInvoice) {
       return (
