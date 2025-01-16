@@ -1,13 +1,13 @@
 import React from "react";
 import styles from "./button.module.css";
 interface ButtonProps {
-  size: "sm" | "md" | "lg";
+  size: "sm" | "md" | "lg" | "logoutbtn";
   radius: "none" | "sm" | "md" | "lg" | "full";
-  bgColor: "primary" | "secondary" | "success" | "danger" | "tertiary";
+  bgColor?: "primary" | "secondary" | "success" | "danger" | "tertiary";
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children?: React.ReactNode;
   type?: "submit" | "reset" | "button";
-  btnwidth?: "addbtn" | "invoicebtn";
+  btnwidth?: "addbtn" | "invoicebtn" | "loginbtn";
 }
 const Button: React.FC<ButtonProps> = ({
   size = "md",

@@ -24,10 +24,12 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import InvoiceDetailsCard from "../InvoiceDetailsCard/Invoice__Details__Card";
 import No__Invoice from "../../atoms/NoInvoice/No__Invoice";
 import Notifications from "../../atoms/Notification/Notification";
+import LoginPage from "../LoginPage/LoginPage";
 
 function Home() {
   const isDelete = useAppSelector(state => state.pageState.isDelete);
   const invoices = useAppSelector(state => state.pageState.invoices);
+  const login =  useAppSelector(state => state.pageState.user.loggedIn);
   const notificationType = useAppSelector(
     state => state.pageState.notificationType
   );
@@ -59,8 +61,6 @@ function Home() {
         setTimeout(() => {
           dispatch(setNotification(false));
         }, 2000);
-
-       
       }}
     />
   );
@@ -136,41 +136,45 @@ function Home() {
     </section>
   );
 
+  
   return (
-    <section className="home">
-      <Dialog children={isDelete ? <Delete id={selectedInvoice} /> : <Form />} />
-      <Sidebar />
+    login ? <section className="home">
+    <Dialog
+      children={isDelete ? <Delete id={selectedInvoice} /> : <Form />}
+    />
+    <Sidebar />
 
-      <main>
-        {/* Routes for rendering content dynamically */}
+    <main>
+      {/* Routes for rendering content dynamically */}
 
-        <div className="notifications">
-          <Notifications
-            message={
-              notificationType.trim() === "create"
-                ? "Invoice added successfully"
-                : notificationType.trim() === "delete"
-                  ? "Invoice deleted successfully"
-                  : notificationType.trim() === "update"
-                    ? "invoice updated successfully"
-                    : "Invoice Retrieved"
-            }
-            type={notificationType}
-          />
-        </div>
-        <Routes>
-          <Route path="/" element={Invoices} />
-          <Route
-            path="/invoice/:id"
-            element={
-              <div className="scrolling">
-                {invoiceDetails}
-              </div>
-            }
-          />
-        </Routes>
-      </main>
-    </section>
+      <div className="notifications">
+        <Notifications
+          message={
+            notificationType.trim() === "create"
+              ? "Invoice added successfully"
+              : notificationType.trim() === "delete"
+                ? "Invoice deleted successfully"
+                : notificationType.trim() === "update"
+                  ? "invoice updated successfully"
+                  : "Invoice Retrieved"
+          }
+          type={notificationType}
+        />
+      </div>
+      <Routes>
+        <Route path="/" element={Invoices} />
+        <Route
+          path="/invoice/:id"
+          element={
+            <div className="scrolling">
+              {invoiceDetails}
+            </div>
+          }
+        />
+      </Routes>
+    </main>
+  </section>:<LoginPage />
+    
   );
 }
 

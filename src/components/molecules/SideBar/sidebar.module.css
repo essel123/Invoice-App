@@ -115,6 +115,20 @@
   }
 }
 
+
+.avatar{
+  transition: display all 5s ease;
+}
+.logout{
+  scale: 0.5;
+  display: none;
+  transition: 10s ease;
+}
+.avatar:hover .logout{
+  display: block;
+  transition: display all 5s ease;
+}
+
 :root {
   --sidebar-bg-color: rgba(55, 59, 83, 1);
 }
