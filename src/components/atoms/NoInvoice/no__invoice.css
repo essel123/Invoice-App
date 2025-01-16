@@ -1,0 +1,11 @@
+.no__invoice {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.text__area {
+  max-width: 250px;
+}
