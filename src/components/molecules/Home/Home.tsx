@@ -1,7 +1,6 @@
 import Dialog from "../../atoms/Dialog/Dialog";
 import Delete from "../Delete/Delete";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
-
 import "../../../App.css";
 import Sidebar from "../SideBar/SideBar";
 import Header from "../Header/Header";
@@ -25,12 +24,16 @@ import InvoiceDetailsCard from "../InvoiceDetailsCard/Invoice__Details__Card";
 import No__Invoice from "../../atoms/NoInvoice/No__Invoice";
 import Notifications from "../../atoms/Notification/Notification";
 import LoginPage from "../LoginPage/LoginPage";
+import LoadingSpinner from "../../atoms/Loader/Loader";
+import { FormData } from "../Form/Form";
+import { useEffect, useState } from "react";
 // import data from '../../../assets/data.json';
 
 function Home() {
   const isDelete = useAppSelector(state => state.pageState.isDelete);
-  const invoices = useAppSelector(state => state.pageState.invoices);
-  const login =  useAppSelector(state => state.pageState.user.loggedIn);
+  // const invoices = useAppSelector(state => state.pageState.invoices);
+  const login = useAppSelector(state => state.pageState.user.loggedIn);
+  const token = useAppSelector(state => state.pageState.user.token);
   const notificationType = useAppSelector(
     state => state.pageState.notificationType
   );
@@ -39,12 +42,46 @@ function Home() {
   const selectedInvoice = useAppSelector(
     state => state.pageState.selectedInvoice
   );
+
   const dispatch = useAppDispatch();
   const handleClick = () => {
     dispatch(setDelete(false));
     dispatch(setEdit(false));
     dispatch(setDialog(!isOpen));
   };
+
+  const [invoices, setinvoices] = useState<FormData[]>([]);
+  const [loading, setloading] = useState(false);
+  const api =  "https://invoice-app-bknd-strapi-cloud.onrender.com/invoices";
+  const fetcthInvoices = async (api: string) => {
+    try {
+      setloading(true);
+      const incoicesResponse = await fetch(
+        api,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`
+          }
+        }
+      );
+      if (incoicesResponse.ok) {
+        const invoiceResult = await incoicesResponse.json();
+        setinvoices(invoiceResult);
+      } else {
+        throw new Error(`HTTP error! Status: ${incoicesResponse.status}`);
+      }
+    } catch (error) {
+      console.error("Fetching failed:", error);
+    } finally {
+      setloading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetcthInvoices(api);
+  }, [api]);
 
   const InvoicesList = invoices.map(invoice =>
     <Invoice
@@ -65,7 +102,7 @@ function Home() {
       }}
     />
   );
-console.log('incoices',invoices);
+
   const invoiceDetails = invoices.map(invoice => {
     if (invoice.id === selectedInvoice) {
       return (
@@ -137,46 +174,45 @@ console.log('incoices',invoices);
     </section>
   );
 
-  
-  return (
-    login ? <section className="home">
-    <Dialog
-      children={isDelete ? <Delete id={selectedInvoice} /> : <Form />}
-    />
-    <Sidebar />
-
-    <main>
-      {/* Routes for rendering content dynamically */}
-
-      <div className="notifications">
-        <Notifications
-          message={
-            notificationType.trim() === "create"
-              ? "Invoice added successfully"
-              : notificationType.trim() === "delete"
-                ? "Invoice deleted successfully"
-                : notificationType.trim() === "update"
-                  ? "invoice updated successfully"
-                  : "Invoice Retrieved"
-          }
-          type={notificationType}
+  return login
+    ? <section className="home">
+        <Dialog
+          children={isDelete ? <Delete id={selectedInvoice} /> : <Form />}
         />
-      </div>
-      <Routes>
-        <Route path="/" element={Invoices} />
-        <Route
-          path="/invoice/:id"
-          element={
-            <div className="scrolling">
-              {invoiceDetails}
-            </div>
-          }
-        />
-      </Routes>
-    </main>
-  </section>:<LoginPage />
-    
-  );
+
+        <Sidebar />
+
+        <main>
+          {/* Routes for rendering content dynamically */}
+
+          <div className="notifications">
+            <Notifications
+              message={
+                notificationType.trim() === "create"
+                  ? "Invoice added successfully"
+                  : notificationType.trim() === "delete"
+                    ? "Invoice deleted successfully"
+                    : notificationType.trim() === "update"
+                      ? "invoice updated successfully"
+                      : "Invoice Retrieved"
+              }
+              type={notificationType}
+            />
+          </div>
+          <Routes>
+            <Route path="/" element={loading ? <LoadingSpinner /> : Invoices} />
+            <Route
+              path="/invoice/:id"
+              element={
+                <div className="scrolling">
+                  {invoiceDetails}
+                </div>
+              }
+            />
+          </Routes>
+        </main>
+      </section>
+    : <LoginPage />;
 }
 
 export default Home;

@@ -1,6 +1,7 @@
-import { FieldError, UseFormRegister } from "react-hook-form";
+import { FieldError, UseFormRegister,  } from "react-hook-form";
 import styles from '../../molecules/Form/form.module.css'
 import { Text } from "../Text/Text";
+
 interface InputFieldProps {
   label: React.ReactNode;
   register: UseFormRegister<any>;

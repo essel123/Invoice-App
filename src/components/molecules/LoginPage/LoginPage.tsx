@@ -7,7 +7,7 @@ import Headline from "../../atoms/Headline/Headline";
 import LoadingSpinner from "../../atoms/Loader/Loader";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
-import { setDialog, setInvoice, setUser } from "../../../State/stateSlice";
+import { setDialog, setUser } from "../../../State/stateSlice";
 const  LoginPage = () => {
   type formData = {
     username: string;
@@ -33,7 +33,7 @@ const dispatch = useAppDispatch();
 const userData = (data: formData,token:string): userSignInDataType => {
     return { ...data, token, loggedIn: true };
 }
-const fetchLogin = async (data: formData) => {
+const authenticateUser = async (data: formData) => {
     setLoading(true);
     try {
         const response = await fetch("https://invoice-app-bknd-strapi-cloud.onrender.com/login", {
@@ -50,29 +50,7 @@ const fetchLogin = async (data: formData) => {
          dispatch(setDialog(!login));
          dispatch(setUser({ user: data_ }));
 
-         try{
-            const incoicesResponse = await fetch("https://invoice-app-bknd-strapi-cloud.onrender.com/invoices", {
-           
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "authorization": `Bearer ${result.token}`,
-                },
-               
-            });
-    
-            if (incoicesResponse.ok) {
-                const invoiceResult = await incoicesResponse.json();
-                 dispatch(setInvoice(invoiceResult));
-                console.log(invoiceResult);
-    
-            } else {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-         }
-         catch (error) {
-            console.error("Fetching failed:", error);
-         }
+         
     } else {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -84,7 +62,7 @@ const fetchLogin = async (data: formData) => {
 };
 
 const onSubmit = (data: formData) => {
-    fetchLogin(data);
+    authenticateUser(data);
     dispatch(setDialog(false));
 };
 
