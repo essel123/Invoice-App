@@ -49,6 +49,7 @@ function Home() {
     dispatch(setEdit(false));
     dispatch(setDialog(!isOpen));
   };
+  
 
   const [invoices, setinvoices] = useState<FormData[]>([]);
   const [loading, setloading] = useState(false);
@@ -76,12 +77,13 @@ function Home() {
       console.error("Fetching failed:", error);
     } finally {
       setloading(false);
+     
     }
   };
 
   useEffect(() => {
     fetcthInvoices(api);
-  }, [api]);
+  },[api]);
 
   const InvoicesList = invoices.map(invoice =>
     <Invoice

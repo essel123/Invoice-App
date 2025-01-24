@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
-import { addInvoice, setDialog, setNotification, setNotificationType, updateInvoice } from "../../../State/stateSlice";
+import {setDialog, setNotification, setNotificationType, updateInvoice } from "../../../State/stateSlice";
 import Button from "../../atoms/Button/Button";
 import Headline from "../../atoms/Headline/Headline";
 import Icon from "../../atoms/Icon/Icon";
@@ -44,6 +44,7 @@ function Form() {
   const isOpen = useAppSelector(state => state.pageState.isOpen);
   const invoices =  useAppSelector(state=> state.pageState.invoices);
   const invoiceSelected = invoices.find(invoice => invoice.id === selectedInvoice);
+  const token = useAppSelector(state => state.pageState.user.token);
 
   const [items, setItems] = useState<Item[]>( isEdit && invoiceSelected? invoiceSelected.items :[]);
 
@@ -52,7 +53,7 @@ function Form() {
     const numbers = Array.from({ length: 4 }, () => Math.floor(Math.random() * 10)).join('');
     return `${letters}${numbers}`;
   };
-
+  
   const handleChange = (index: number, field: keyof Item, value: string | number) => {
     const updatedItems = [...items];
     updatedItems[index][field] = value as never;
@@ -98,7 +99,7 @@ function Form() {
 
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>({ defaultValues });
  
-  const onSubmit = (data: FormData, status: string) => {
+  const onSubmit = async (data: FormData, status: string) => {
      defaultValues.items = items;
      const invoiceData = {
       ...data,
@@ -106,7 +107,7 @@ function Form() {
       items,
       paymentDue: new Date(new Date().setDate(new Date(data.createdAt).getDate() + data.paymentTerms)).toISOString().split('T')[0],
     };
-   
+
 
     if(isEdit === true)
     {
@@ -117,9 +118,31 @@ function Form() {
 
     }
     else{
-      dispatch(addInvoice(invoiceData));
-      dispatch(setDialog(!isOpen));
-      setNotifications("create")
+      
+      try {
+
+        const response = await fetch("https://invoice-app-bknd-strapi-cloud.onrender.com/invoices", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token.trim()})}`
+          },
+          body: JSON.stringify(invoiceData),
+        } );
+
+        if(response.ok){
+          dispatch(setDialog(!isOpen));
+          setNotifications("create")
+        }
+        else{
+
+          alert(token)
+        }
+      } catch (error) {
+       
+        console.error("Invoice creation failed:", error);
+      } 
+     
       
     }
     

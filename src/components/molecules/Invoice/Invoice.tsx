@@ -4,7 +4,6 @@ import Headline from "../../atoms/Headline/Headline";
 import Icon from "../../atoms/Icon/Icon";
 import { Text } from "../../atoms/Text/Text";
 import styles from "./invoice.module.css";
-
 type InvoiceProps = {
   status: string;
   paymentDue: string;
@@ -35,7 +34,7 @@ function Invoice({
             <Headline
               children={
                 <span className={styles.invoiceId}>
-                  {" "}<h1>#</h1>
+                  <h1>#</h1>
                   {id}
                 </span>
               }
