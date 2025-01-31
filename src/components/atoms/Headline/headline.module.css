@@ -16,3 +16,13 @@
 .form__captions {
   color: #7c5dfa;
 }
+
+.status {
+  font-size: 80px;
+}
+
+@media (max-width: 450px) {
+  .status {
+    font-size: 50px;
+  }
+}

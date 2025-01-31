@@ -27,6 +27,7 @@ import LoginPage from "../LoginPage/LoginPage";
 import LoadingSpinner from "../../atoms/Loader/Loader";
 import { FormData } from "../Form/Form";
 import { useEffect, useState } from "react";
+import RequestStatus from "../../atoms/RequestStatus/RequestStatus";
 // import data from '../../../assets/data.json';
 
 function Home() {
@@ -49,41 +50,40 @@ function Home() {
     dispatch(setEdit(false));
     dispatch(setDialog(!isOpen));
   };
-  
-
   const [invoices, setinvoices] = useState<FormData[]>([]);
   const [loading, setloading] = useState(false);
-  const api =  "https://invoice-app-bknd-strapi-cloud.onrender.com/invoices";
+  const [responseStatus, setResponseStatus] = useState(200);
+  const api = "https://invoice-app-bknd-strapi-cloud.onrender.com/invoices";
   const fetcthInvoices = async (api: string) => {
     try {
       setloading(true);
-      const incoicesResponse = await fetch(
-        api,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`
-          }
+      const invoiceResponse = await fetch(api, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`
         }
-      );
-      if (incoicesResponse.ok) {
-        const invoiceResult = await incoicesResponse.json();
+      });
+      if (invoiceResponse.ok) {
+        const invoiceResult = await invoiceResponse.json();
         setinvoices(invoiceResult);
       } else {
-        throw new Error(`HTTP error! Status: ${incoicesResponse.status}`);
+        setResponseStatus(invoiceResponse.status);
+        throw new Error(`HTTP error! Status: ${invoiceResponse.status}`);
       }
     } catch (error) {
       console.error("Fetching failed:", error);
     } finally {
       setloading(false);
-     
     }
   };
 
-  useEffect(() => {
-    fetcthInvoices(api);
-  },[api]);
+  useEffect(
+    () => {
+      fetcthInvoices(api);
+    },
+    [api]
+  );
 
   const InvoicesList = invoices.map(invoice =>
     <Invoice
@@ -202,7 +202,14 @@ function Home() {
             />
           </div>
           <Routes>
-            <Route path="/" element={loading ? <LoadingSpinner /> : Invoices} />
+            <Route
+              path="/"
+              element={
+                loading
+                  ? <LoadingSpinner />
+                  : responseStatus === 200 ? Invoices : <RequestStatus />
+              }
+            />
             <Route
               path="/invoice/:id"
               element={
