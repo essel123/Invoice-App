@@ -9,12 +9,15 @@ import Header from "../../molecules/Header/Header";
 import Icon from "../../atoms/Icon/Icon";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
 import {
+  removeInvoice,
   setDelete,
   setDialog,
   setEdit,
   updateInvoiceStatusToPaid
 } from "../../../State/stateSlice";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../atoms/Loader/Loader";
+import { useState } from "react";
 
 interface Address {
   street: string;
@@ -50,7 +53,7 @@ function AddressDetails({ address }: { address: Address }) {
       <Text class_="description" children={`${address.street}`} />
       <Text class_="description" children={`${address.city}`} />
       <Text class_="description" children={`${address.postCode}`} />
-      <Text  class_= "description" children={`${address.country}`} />
+      <Text class_="description" children={`${address.country}`} />
     </div>
   );
 }
@@ -83,6 +86,9 @@ function InvoiceDetailsCard({
     state => state.pageState.selectedInvoice
   );
 
+  const token = useAppSelector(state => state.pageState.user.token);
+  const [loading, setLoading] = useState(false);
+
   const handleEdit = () => {
     dispatch(setEdit(true));
     dispatch(setDelete(false));
@@ -92,16 +98,46 @@ function InvoiceDetailsCard({
   const handleDelete = () => {
     dispatch(setDelete(true));
     dispatch(setDialog(!isOpen));
-
   };
 
-  const handleMarkAsPaid = () => {
+  const handleMarkAsPaid = async () => {
     dispatch(updateInvoiceStatusToPaid(selectedInvoice));
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `https://invoice-app-bknd-strapi-cloud.onrender.com/invoices/${selectedInvoice}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`
+          },
+
+          body: JSON.stringify({ status: "paid" })
+        }
+      );
+      if (response.ok) {
+        setTimeout(() => window.location.reload(), 500);
+      } else {
+        console.log("Failed to update invoice status");
+      }
+    } catch (error) {
+      console.error("Failed to update invoice status", error);
+    } finally {
+      setLoading(false);
+    }
+
     navigate("/");
   };
 
+  const handleGoBack = () =>{
+    navigate("/");
+    dispatch(removeInvoice(selectedInvoice))
+  }
+
   return (
     <section className={styles.invoice__details}>
+      {loading && <LoadingSpinner />}
       <Headline
         children={
           <div className={styles.goBack} onClick={() => navigate("/")}>
@@ -110,7 +146,8 @@ function InvoiceDetailsCard({
               isClickable={true}
               src="../assets/icon-arrow-left.svg"
               alt={"go back"}
-              onClick={() => navigate("/")}
+              onClick={handleGoBack}
+
             />Go back
           </div>
         }

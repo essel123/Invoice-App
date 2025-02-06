@@ -11,6 +11,7 @@ import Headline from "../../atoms/Headline/Headline";
 import { Text } from "../../atoms/Text/Text";
 import Invoice from "../Invoice/Invoice";
 import {
+  addInvoice,
   setDelete,
   setDialog,
   setEdit,
@@ -28,11 +29,8 @@ import LoadingSpinner from "../../atoms/Loader/Loader";
 import { FormData } from "../Form/Form";
 import { useEffect, useState } from "react";
 import RequestStatus from "../../atoms/RequestStatus/RequestStatus";
-// import data from '../../../assets/data.json';
-
 function Home() {
   const isDelete = useAppSelector(state => state.pageState.isDelete);
-  // const invoices = useAppSelector(state => state.pageState.invoices);
   const login = useAppSelector(state => state.pageState.user.loggedIn);
   const token = useAppSelector(state => state.pageState.user.token);
   const notificationType = useAppSelector(
@@ -98,6 +96,7 @@ function Home() {
         dispatch(setSelectedInvoice(invoice.id));
         dispatch(setNotification(true));
         dispatch(setNotificationType("retrieve"));
+        dispatch(addInvoice(invoice));
         setTimeout(() => {
           dispatch(setNotification(false));
         }, 2000);

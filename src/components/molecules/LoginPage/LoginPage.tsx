@@ -68,6 +68,7 @@ const LoginPage = () => {
     <section className={styles.loginpage}>
       {loading && <LoadingSpinner />}
       <div className={styles.login__form}>
+        <br />
         <Headline children={"Login"} variant="h2" />
         <form onSubmit={handleSubmit(data => onSubmit(data))}>
           <InputField

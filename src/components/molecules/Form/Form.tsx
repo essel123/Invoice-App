@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../State/hooks";
-import {setDialog, setNotification, setNotificationType, updateInvoice } from "../../../State/stateSlice";
+import {setDialog, setNotification, setNotificationType } from "../../../State/stateSlice";
 import Button from "../../atoms/Button/Button";
 import Headline from "../../atoms/Headline/Headline";
 import Icon from "../../atoms/Icon/Icon";
@@ -79,9 +79,39 @@ function Form() {
   }
 
 
+
+  const getInvoiceToBeUpdated =  async (data:FormData)=>{
+
+     try{
+      const response = await fetch(`https://invoice-app-bknd-strapi-cloud.onrender.com/invoices/${selectedInvoice}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(data),
+
+      });
+      if (response.ok) {
+        dispatch(setDialog(!isOpen));
+        setNotifications("update");
+        
+      }
+      else{
+        console.error("Invoice not found")
+      }
+
+     }
+     catch{
+        console.error("Invoice not found") 
+     }
+
+  }
+
  
+
   const defaultValues: FormData = isEdit && invoiceSelected ? {
-    ...invoiceSelected
+    ...invoiceSelected,
   } : {
     id: generateInvoiceId(),
     senderAddress: { street: "", city: "", postCode: "", country: "" },
@@ -111,21 +141,18 @@ function Form() {
 
     if(isEdit === true)
     {
-
-      dispatch(updateInvoice(invoiceData));
-      dispatch(setDialog(!isOpen));
-      setNotifications("update")
-
+      getInvoiceToBeUpdated(invoiceData);
+    
     }
+
     else{
       
       try {
-
         const response = await fetch("https://invoice-app-bknd-strapi-cloud.onrender.com/invoices", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token.trim()})}`
+            Authorization: `Bearer ${token}`
           },
           body: JSON.stringify(invoiceData),
         } );
@@ -136,14 +163,15 @@ function Form() {
         }
         else{
 
-          alert(token)
+          alert(response.status)
         }
       } catch (error) {
-       
         console.error("Invoice creation failed:", error);
       } 
-     
-      
+      finally
+      {
+        window.location.reload();
+      } 
     }
     
   };
