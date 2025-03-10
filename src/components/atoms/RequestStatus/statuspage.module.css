@@ -1,0 +1,11 @@
+.status__page{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%
+}
+
+.status__container{
+    max-width: 300px;
+}

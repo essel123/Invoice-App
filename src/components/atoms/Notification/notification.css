@@ -1,0 +1,26 @@
+
+.notification {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+    color: #fff;
+    font-weight: bold;
+}
+
+.notification-delete {
+    background-color: #f44336; 
+}
+
+.notification-update {
+    background-color: #ff9800;
+}
+
+.notification-retrieve {
+    background-color: #2196f3;
+}
+
+.notification-create {
+    background-color: #4caf50; 
+}
