@@ -162,8 +162,8 @@ function Form() {
           setNotifications("create")
         }
         else{
-
-          alert(response.status)
+          console.log(response.status, response.statusText)
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
       } catch (error) {
         console.error("Invoice creation failed:", error);

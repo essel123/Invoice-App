@@ -50,7 +50,7 @@ function Home() {
   };
   const [invoices, setinvoices] = useState<FormData[]>([]);
   const [loading, setloading] = useState(false);
-  const [responseStatus, setResponseStatus] = useState(200);
+  const [responseStatus, setResponseStatus] = useState(0);
   const InvoiceApi =
     "https://invoice-app-bknd-strapi-cloud.onrender.com/invoices";
   const fetcthInvoices = async (api: string) => {
@@ -66,6 +66,7 @@ function Home() {
       if (invoiceResponse.ok) {
         const invoiceResult = await invoiceResponse.json();
         setinvoices(invoiceResult);
+        setResponseStatus(invoiceResponse.status);
       } else {
         setResponseStatus(invoiceResponse.status);
         throw new Error(`HTTP error! Status: ${invoiceResponse.status}`);
@@ -74,6 +75,8 @@ function Home() {
       console.error("Fetching failed:", error);
     } finally {
       setloading(false);
+      dispatch(setNotification(false));
+  
     }
   };
   const fetchInvoicesCallback = useCallback(() => {
