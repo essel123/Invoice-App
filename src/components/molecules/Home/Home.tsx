@@ -27,7 +27,7 @@ import Notifications from "../../atoms/Notification/Notification";
 import LoginPage from "../LoginPage/LoginPage";
 import LoadingSpinner from "../../atoms/Loader/Loader";
 import { FormData } from "../Form/Form";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import RequestStatus from "../../atoms/RequestStatus/RequestStatus";
 function Home() {
   const isDelete = useAppSelector(state => state.pageState.isDelete);
@@ -51,7 +51,8 @@ function Home() {
   const [invoices, setinvoices] = useState<FormData[]>([]);
   const [loading, setloading] = useState(false);
   const [responseStatus, setResponseStatus] = useState(200);
-  const api = "https://invoice-app-bknd-strapi-cloud.onrender.com/invoices";
+  const InvoiceApi =
+    "https://invoice-app-bknd-strapi-cloud.onrender.com/invoices";
   const fetcthInvoices = async (api: string) => {
     try {
       setloading(true);
@@ -75,13 +76,15 @@ function Home() {
       setloading(false);
     }
   };
+  const fetchInvoicesCallback = useCallback(() => {
+    fetcthInvoices(InvoiceApi);
+  }, [InvoiceApi]);
 
-  useEffect(
-    () => {
-      fetcthInvoices(api);
-    },
-    [api]
-  );
+  useEffect(() => {
+    fetchInvoicesCallback();
+  }, [fetchInvoicesCallback]);
+
+
 
   const InvoicesList = invoices.map(invoice =>
     <Invoice

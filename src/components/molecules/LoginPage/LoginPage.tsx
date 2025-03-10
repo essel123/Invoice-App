@@ -1,3 +1,5 @@
+// LoginPage.tsx
+
 import { useForm } from "react-hook-form";
 import InputField from "../../atoms/TextField/TextField";
 import styles from "./loginpage.module.css";
@@ -6,35 +8,37 @@ import { Text } from "../../atoms/Text/Text";
 import Headline from "../../atoms/Headline/Headline";
 import LoadingSpinner from "../../atoms/Loader/Loader";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../State/hooks";
-import { setDialog, setUser } from "../../../State/stateSlice";
+import { useAppDispatch } from "../../../State/hooks";
+import { setUser } from "../../../State/stateSlice";
+
 const LoginPage = () => {
-  type formData = {
+  type FormData = {
     username: string;
     password: string;
   };
 
-  type userSignInDataType = {
+  type UserSignInDataType = {
     username: string;
     password: string;
     token: string;
     loggedIn: boolean;
   };
 
-  const { register, handleSubmit, formState: { errors } } = useForm<formData>();
-
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [loading, setLoading] = useState(false);
-  const login = useAppSelector(state => state.pageState.user.loggedIn);
   const dispatch = useAppDispatch();
 
-  const userData = (data: formData, token: string): userSignInDataType => {
+  // Create user data with token and loggedIn status
+  const userData = (data: FormData, token: string): UserSignInDataType => {
     return { ...data, token, loggedIn: true };
   };
-  const authenticateUser = async (data: formData) => {
+
+  // Authenticate user with API request
+  const authenticateUser = async (data: FormData) => {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://invoice-app-bknd-strapi-cloud.onrender.com/login",
+        "https://invoice-app-bknd-strapi-cloud.onrender.com/login", // Can be moved to an env variable
         {
           method: "POST",
           headers: {
@@ -46,22 +50,23 @@ const LoginPage = () => {
 
       if (response.ok) {
         const result = await response.json();
-        const data_ = userData(data, result.token);
-        dispatch(setDialog(!login));
-        dispatch(setUser({ user: data_ }));
+        const user = userData(data, result.token);
+
+        dispatch(setUser({ user }));
       } else {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        throw new Error(`Login failed with status: ${response.status}`);
       }
     } catch (error) {
       console.error("Login failed:", error);
+      alert("Login failed. Please try again."); // You can improve this to show a better error message
     } finally {
       setLoading(false);
     }
   };
 
-  const onSubmit = (data: formData) => {
+  // On form submit
+  const onSubmit = (data: FormData) => {
     authenticateUser(data);
-    dispatch(setDialog(false));
   };
 
   return (
@@ -70,7 +75,7 @@ const LoginPage = () => {
       <div className={styles.login__form}>
         <br />
         <Headline children={"Login"} variant="h2" />
-        <form onSubmit={handleSubmit(data => onSubmit(data))}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <InputField
             label={
               <Text
@@ -107,7 +112,7 @@ const LoginPage = () => {
             btnwidth="loginbtn"
             size={"lg"}
             radius={"lg"}
-            onClick={() => null}
+            type="submit" // Ensures the button triggers form submission
             children={"Login"}
           />
         </form>
