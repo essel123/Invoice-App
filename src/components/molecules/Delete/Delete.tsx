@@ -9,21 +9,25 @@ import {
   setNotificationType
 } from "../../../State/stateSlice";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-
 type DeleteProps = {
   id?: string;
 };
 
 function Delete({ id }: DeleteProps) {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const isOpen = useAppSelector(state => state.pageState.isOpen);
+
   const selectedInvoice = useAppSelector(
     state => state.pageState.selectedInvoice
   );
+
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
   const token = useAppSelector(state => state.pageState.user.token);
 
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const handleCancel = () => {
     dispatch(setDialog(!isOpen));
   };
@@ -46,20 +50,22 @@ function Delete({ id }: DeleteProps) {
         dispatch(setNotification(true));
         dispatch(setNotificationType("delete"));
         setTimeout(() => {
-          dispatch(setNotification(false));
-        }, 2000);
+          refreshPage();
+        }, 2500);
       } else {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      setTimeout(() => {
+        dispatch(setNotification(false));
+      }, 2000);
     } catch (error) {
       console.error("Delete failed:", error);
+    } finally {
+      setTimeout(() => {
+        dispatch(setNotification(false));
+      }, 2000);
     }
   };
-  useEffect(() => {
-    if (!isOpen) return;
-    handledDelete();
-  }, [isOpen]);
-
   return (
     <div className={styles.deleteInvoiceCard}>
       <div className={styles.deleteInvoice}>
@@ -97,4 +103,3 @@ function Delete({ id }: DeleteProps) {
 }
 
 export default Delete;
-
